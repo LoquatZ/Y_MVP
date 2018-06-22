@@ -1,5 +1,6 @@
 package com.yuang.yuangapplication.net;
 
+import com.yuang.library.base.BaseResponse;
 import com.yuang.yuangapplication.recyclerview.entity.TvBean;
 
 import retrofit2.http.GET;
@@ -13,5 +14,5 @@ import rx.Observable;
 
 public interface NetApi {
     @GET("http://www.quanmin.tv/{url}?11211639&os=1&v=2.2.4&os=1&ver=4")
-    Observable<TvBean> getOtherList(@Path("url") String url);
+    Observable<BaseResponse<TvBean>> getOtherList(@Path("url") String url);
 }

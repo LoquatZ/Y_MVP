@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Priority;
@@ -31,8 +30,8 @@ import static com.yuang.library.widget.dialog.YDialogChooseImage.LayoutType.TITL
 
 public class DialogActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
     @BindView(R.id.choose_photo)
     CardView choosePhoto;
     @BindView(R.id.choose_image)
@@ -45,7 +44,8 @@ public class DialogActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setToolBar(toolbar, "Dialog", false);
+        initBackTitle("Dialog");
+//        setToolBar(toolbar, "Dialog", false);
     }
 
     @OnClick(R.id.choose_photo)
@@ -53,7 +53,6 @@ public class DialogActivity extends BaseActivity {
         YDialogChooseImage dialogChooseImage = new YDialogChooseImage(this, TITLE);
         dialogChooseImage.show();
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

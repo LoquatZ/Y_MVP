@@ -64,7 +64,8 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
             public void onLoadMoreRequested() {
                 mPresenter.getData("json/categories/lol/list.json");
             }
-        });
+        },recyclerview);
+
         recyclerview.setLayoutManager(new GridLayoutManager(mContext, 2));
         recyclerview.setSwipeMenuCreator(swipeMenuCreator);
         recyclerview.setSwipeMenuItemClickListener(mMenuItemClickListener);

@@ -49,11 +49,6 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
         return this;
     }
 
-    @Override
-    public void showError(String msg) {
-
-    }
-
     @OnClick({R.id.baserecyclerview, R.id.rxpermissions, R.id.banner, R.id.dialog,R.id.pop,R.id.webview})
     public void onViewClicked(View view) {
         switch (view.getId()) {

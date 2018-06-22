@@ -6,7 +6,6 @@ import android.content.Context;
  * Created by Yuang on 17/12/8.
  * Summary:View 接口
  */
-public interface BaseView {
-
+public interface BaseView extends BaseUiInterface{
     Context getContext();
 }

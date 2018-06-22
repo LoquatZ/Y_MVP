@@ -1,5 +1,6 @@
 package com.yuang.yuangapplication.recyclerview;
 
+import com.yuang.library.base.BaseResponse;
 import com.yuang.library.net.RxService;
 import com.yuang.library.utils.helper.RxUtil;
 import com.yuang.yuangapplication.net.NetApi;
@@ -15,7 +16,7 @@ import rx.Observable;
 public class RecyclerViewModel implements RecyclerViewContract.Model{
 
     @Override
-    public Observable<TvBean> getData(String url) {
+    public Observable<BaseResponse<TvBean>> getData(String url) {
         return RxService.createApi(NetApi.class).getOtherList("json/categories/lol/list.json").compose(RxUtil.rxSchedulerHelper());
     }
 }
