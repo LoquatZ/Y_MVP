@@ -2,37 +2,26 @@ package com.yuang.library.utils;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+
 import com.yuang.library.BuildConfig;
 
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
- * Log 工具类
+ * 项目名称: Logg
+ * 类描述: Log 工具类
+ * 注意: 使用是 build.gradle 添加 BuildConfig.LOGG_OPEN
+ * 创建人: Yuang QQ:274122635
+ * 创建时间: 2018/10/11 下午1:46
  */
 
-public class Logg {
+public final class Logg implements HttpLoggingInterceptor.Logger {
     private static boolean open = BuildConfig.LOGG_OPEN;
     private static String TAG = "_Logg";
     private static String TAG_RELEASE = TAG + "_release";
-    private static StringBuilder sb = new StringBuilder();
-
-    /**
-     * 初始化Logg
-     *
-     * @param open 是否开启Logg （发布后建议设置为false）
-     * @param TAG  Logg的TAG 默认为_Logg
-     */
-    public static void init(boolean open, String TAG) {
-        Logg.open = open;
-        Logg.TAG = TAG;
-    }
-
-    public static void init(boolean open) {
-        Logg.open = open;
-    }
-
-    public static void init(String TAG) {
-        Logg.TAG = TAG;
-    }
+    private static final String LOG_UP_LINE = "┌────── Log ────────────────────────────────────────────────────────────────────────";
+    private static final String LOG_END_LINE = "└───────────────────────────────────────────────────────────────────────────────────";
+    private static final String CENTER_LINE = "├ ";
 
     public static void v(@NonNull String o) {
         if (!open)
@@ -82,35 +71,46 @@ public class Logg {
      *
      * @return 用于自定义打印‘调用方法行数’
      */
-    private static String getMethodLine() {
-        if (sb == null)
-            sb = new StringBuilder();
-        if (sb.length() > 0)
-            sb.delete(0, sb.length());
+    private static void getMethodLine() {
         try {
             StackTraceElement traceElement = new Throwable().fillInStackTrace().getStackTrace()[2];
-            sb.append("At ");
             String fullClassName = traceElement.getClassName();
-            sb.append(fullClassName);
-            sb.append(".");
             String methodName = traceElement.getMethodName();
-            sb.append(methodName);
-            sb.append(" (");
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-            sb.append(className);
-            sb.append(".java:");
             String lineNumber = String.valueOf(traceElement.getLineNumber());
-            sb.append(lineNumber);
-            sb.append(")");
-            Log.v(TAG, "↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
-            Log.v(TAG, "|"+fullClassName + "." + methodName + "(" + className + ".java:" + lineNumber + ")"+" |");
-            Log.v(TAG, "↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑");
-            return sb.toString();
+            Log.v(resolveTag(TAG), LOG_UP_LINE);
+            Log.v(resolveTag(TAG), CENTER_LINE + fullClassName + "." + methodName + "(" + className + ".java:" + lineNumber + ")");
+            Log.v(resolveTag(TAG), LOG_END_LINE);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-        return "";
 
     }
 
+    @Override
+    public void log(@NonNull String message) {
+        d(message);
+    }
+
+    private static ThreadLocal<Integer> last = new ThreadLocal<Integer>() {
+        @Override
+        protected Integer initialValue() {
+            return 0;
+        }
+    };
+
+    private static final String[] ARMS = new String[]{"-A-", "-R-", "-M-", "-S-"};
+
+    private static String computeKey() {
+        if (last.get() >= 4) {
+            last.set(0);
+        }
+        String s = ARMS[last.get()];
+        last.set(last.get() + 1);
+        return s;
+    }
+
+    private static String resolveTag(String tag) {
+        return computeKey() + tag;
+    }
 }

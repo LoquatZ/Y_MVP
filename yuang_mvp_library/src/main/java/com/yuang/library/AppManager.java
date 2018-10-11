@@ -11,7 +11,7 @@ import java.util.Stack;
  * Created by Yuang on 17/12/8.
  * Summary:Activity管理
  */
-public class AppManager {
+public final class AppManager {
     private static Stack<Activity> activityStack;
     private static AppManager instance;
 

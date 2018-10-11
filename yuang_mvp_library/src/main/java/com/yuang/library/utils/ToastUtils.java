@@ -1,5 +1,6 @@
 package com.yuang.library.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ public class ToastUtils {
     /**
      * 非阻塞试显示Toast,防止出现连续点击Toast时的显示问题
      */
+    @SuppressLint("ShowToast")
     public static void showToast(Context context, CharSequence text, int duration) {
         if (mToast == null) {
             mToast = Toast.makeText(context, text, duration);

@@ -7,10 +7,17 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.yuang.library.base.BaseWebActivity;
 
 public class WebViewActivity extends BaseWebActivity {
+
+    @Override
+    protected View setToolBar() {
+        return null;
+    }
 
     @Override
     public void initData() {
@@ -18,14 +25,18 @@ public class WebViewActivity extends BaseWebActivity {
     }
 
     @Override
-    public void setToolbar() {
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public LinearLayout webLayout() {
+        return null;
+    }
+
+    @Override
+    public TextView mTitleTextView() {
+        return null;
     }
 
     @Override

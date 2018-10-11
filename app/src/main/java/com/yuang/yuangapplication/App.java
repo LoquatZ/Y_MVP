@@ -7,7 +7,7 @@ public class App extends BaseApp {
 
     @Override
     public String setBaseUrl() {
-        return "http://news-at.zhihu.com/api/4/";
+        return "http://gank.io/";
     }
 
     @Override

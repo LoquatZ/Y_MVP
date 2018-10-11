@@ -23,6 +23,11 @@ public interface BaseUiInterface {
     void showDataException(String msg);
 
     /**
+     * 服务器返回失败
+     */
+    void showError(String msg);
+
+    /**
      * 显示加载完成的UI(e.g. 复位 Ultra-Ptr头部或尾部)
      */
     void showLoadingComplete();
@@ -30,7 +35,7 @@ public interface BaseUiInterface {
     /**
      * 显示进度条对话框。
      */
-    Dialog showLoadingDialog();
+    Dialog showLoadingDialog(String msg);
 
     /**
      * 关闭进度条对话框。

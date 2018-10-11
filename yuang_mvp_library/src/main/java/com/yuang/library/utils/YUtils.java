@@ -21,10 +21,10 @@ import java.util.Locale;
 public class YUtils {
     private static final Object mLock = new Object();
     private static YUtils mInstance;
-    public static YUtils getInstance(){
-        if(mInstance == null){
-            synchronized (mLock){
-                if(mInstance == null){
+    public static YUtils getInstance() {
+        if (mInstance == null) {
+            synchronized (mLock) {
+                if (mInstance == null) {
                     mInstance = new YUtils();
                 }
             }
@@ -34,11 +34,11 @@ public class YUtils {
 
     /**
      * 图片裁剪
+     *
      * @param uri
      */
-    public void initUCrop(Activity activity,Uri uri) {
+    public void initUCrop(Activity activity, Uri uri) {
         //Uri destinationUri = RxPhotoUtils.createImagePathUri(this);
-
         SimpleDateFormat timeFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
         long time = System.currentTimeMillis();
         String imageName = timeFormatter.format(new Date(time));
@@ -74,9 +74,10 @@ public class YUtils {
 //        options.setCropGridRowCount(1);
 
         UCrop.of(uri, destinationUri)
-                .withAspectRatio(1, 1)
-                .withMaxResultSize(1000, 1000)
+                .withAspectRatio(9, 16)
+                .withMaxResultSize(1080, 1920)
                 .withOptions(options)
                 .start(activity);
     }
+
 }

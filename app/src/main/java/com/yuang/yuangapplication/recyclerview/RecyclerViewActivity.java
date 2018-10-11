@@ -15,10 +15,11 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yuang.library.base.BaseActivity;
-import com.yuang.library.glide.GlideCircleTransform;
 import com.yuang.yuangapplication.R;
-import com.yuang.yuangapplication.recyclerview.entity.TvBean;
+import com.yuang.yuangapplication.recyclerview.entity.GankItemBean;
 import com.yuang.yuangapplication.utils.GlideApp;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -29,7 +30,7 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
     SwipeMenuRecyclerView recyclerview;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    private BaseQuickAdapter<TvBean.DataBean, BaseViewHolder> baseQuickAdapter;
+    private BaseQuickAdapter<GankItemBean, BaseViewHolder> baseQuickAdapter;
 
     @Override
     public int getLayoutId() {
@@ -39,23 +40,15 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
     @Override
     public void initView(Bundle savedInstanceState) {
         setToolBar(toolbar, "RecyclerViewActivity", true);
-        baseQuickAdapter = new BaseQuickAdapter<TvBean.DataBean, BaseViewHolder>(R.layout.item_tv_other) {
+        baseQuickAdapter = new BaseQuickAdapter<GankItemBean, BaseViewHolder>(R.layout.item_tv_other) {
             @Override
-            protected void convert(BaseViewHolder helper, TvBean.DataBean item) {
+            protected void convert(BaseViewHolder helper, GankItemBean item) {
                 //Glide在加载GridView等时,由于ImageView和Bitmap实际大小不符合,第一次时加载可能会变形(我这里出现了放大),必须在加载前再次固定ImageView大小
                 GlideApp.with(mContext)
-                        .load(item.getThumb())
+                        .load(item.getUrl())
                         .thumbnail(0.5f)
                         .transition(new DrawableTransitionOptions().crossFade(600))
                         .into((ImageView) helper.getView(R.id.thumnails));
-                GlideApp.with(mContext)
-                        .load(item.getAvatar())
-                        .centerCrop()
-                        .transform(new GlideCircleTransform(mContext))
-                        .into((ImageView) helper.getView(R.id.ic_head));
-                helper.setText(R.id.title, item.getTitle())
-                        .setText(R.id.tv_viewnum, item.getView())
-                        .setText(R.id.nickName, item.getNick());
             }
         };
         baseQuickAdapter.openLoadAnimation();
@@ -71,6 +64,17 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
         recyclerview.setSwipeMenuItemClickListener(mMenuItemClickListener);
         recyclerview.setAdapter(baseQuickAdapter);
 
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        baseQuickAdapter = null;
     }
 
     /**
@@ -112,8 +116,7 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
     }
 
     @Override
-    public void showContent(TvBean info) {
-        baseQuickAdapter.addData(info.getData());
+    public void showContent(List<GankItemBean> info) {
+        baseQuickAdapter.setNewData(info);
     }
-
 }

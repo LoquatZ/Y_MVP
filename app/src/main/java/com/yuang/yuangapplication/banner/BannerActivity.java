@@ -1,14 +1,16 @@
 package com.yuang.yuangapplication.banner;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoaderInterface;
 import com.yuang.library.base.BaseActivity;
-import com.yuang.library.glide.GlideImageLoader;
 import com.yuang.library.utils.SnackbarUtil;
 import com.yuang.yuangapplication.R;
 
@@ -43,7 +45,17 @@ public class BannerActivity extends BaseActivity {
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         //设置图片加载器
-        banner.setImageLoader(new GlideImageLoader());
+        banner.setImageLoader(new ImageLoaderInterface() {
+            @Override
+            public void displayImage(Context context, Object path, View imageView) {
+                
+            }
+
+            @Override
+            public View createImageView(Context context) {
+                return null;
+            }
+        });
         //设置图片集合
         banner.setImages(images);
         //设置banner动画效果
@@ -65,6 +77,11 @@ public class BannerActivity extends BaseActivity {
                 SnackbarUtil.showShort(getCurrentFocus().getRootView(), titles.get(position));
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
 }

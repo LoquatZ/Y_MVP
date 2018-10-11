@@ -7,9 +7,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -17,10 +15,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "LOGG_OPEN", "false"
+            debuggable false
         }
         debug {
             minifyEnabled false
             buildConfigField "boolean", "LOGG_OPEN", "true"
+            debuggable true
         }
     }
 
@@ -34,45 +34,48 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:appcompat-v7:27.0.2'
-    compile 'com.android.support:recyclerview-v7:27.0.2'
-    compile 'com.android.support:cardview-v7:27.0.2'
-    compile 'com.android.support:design:27.0.2'
-    compile 'com.jakewharton:butterknife:8.8.1'
-    compile 'me.yokeyword:fragmentation:0.7.13'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //support
+    api 'com.android.support.constraint:constraint-layout:1.1.2'
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support:recyclerview-v7:27.1.1'
+    api 'com.android.support:cardview-v7:27.1.1'
+    api 'com.android.support:design:27.1.1'
+    api 'com.jakewharton:butterknife:8.8.1'
+    api 'me.yokeyword:fragmentation:0.7.13'
     // RxJava
-    compile 'io.reactivex:rxjava:1.3.0'
-    compile 'io.reactivex:rxandroid:1.2.1'
+    api 'io.reactivex:rxjava:1.3.0'
+    api 'io.reactivex:rxandroid:1.2.1'
     // RxBinding
-    compile 'com.jakewharton.rxbinding:rxbinding:1.0.0'
+    api 'com.jakewharton.rxbinding:rxbinding:1.0.0'
     // Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
     // Glide
-    compile 'com.github.bumptech.glide:glide:4.4.0'
+    api 'com.github.bumptech.glide:glide:4.7.1'
+    api 'jp.wasabeef:glide-transformations:3.3.0'
     // RxPermissions
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+    api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     // banner
-    compile 'com.youth.banner:banner:1.4.10'
+    api 'com.youth.banner:banner:1.4.10'
     //WebView
-    compile 'com.just.agentweb:agentweb:3.1.0'
+    api 'com.just.agentweb:agentweb:3.1.0'
     //Message Code Edit
-    compile 'com.justkiddingbaby:vercodeedittext:1.0.5'
-    //uMeng
-    //noinspection GradleDependency
-    compile 'com.umeng.analytics:analytics:latest.integration'
+    api 'com.justkiddingbaby:vercodeedittext:1.0.5'
+    //友盟
+    api 'com.umeng.analytics:analytics:6.1.4'
     //状态栏
-    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
+    api 'com.gyf.barlibrary:barlibrary:2.3.0'
     //图片裁剪
-    compile 'com.yalantis:ucrop:2.2.0'
+    api 'com.yalantis:ucrop:2.2.0'
     //RecyclerViewAdapter
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     //RecyclerView侧滑删除
-    compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+    api 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+    //Log
+    api 'com.jakewharton.timber:timber:4.7.0'
 }

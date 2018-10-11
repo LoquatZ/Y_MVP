@@ -10,13 +10,15 @@ import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * 用于管理RxBus的事件和Rxjava相关代码的生命周期处理
- * Created by hpw on 16/10/27.
+ * 项目名称: RxManager
+ * 类描述: 用于管理RxBus的事件和RxJava相关代码的生命周期处理
+ * 创建人: Yuang QQ:274122635
+ * 创建时间: 2018/9/10 上午10:52
  */
 
 public class RxManager {
 
-    public RxBus mRxBus = RxBus.$();
+    private RxBus mRxBus = RxBus.$();
     private Map<String, Observable<?>> mObservables = new HashMap<>();// 管理观察源
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();// 管理订阅者者
 

@@ -43,6 +43,11 @@ public class PopWindowActivity extends BaseActivity {
         setToolBar(toolbar, "PopWindow", true);
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     @OnClick({R.id.pop, R.id.bottom_pop})
     public void onViewClicked(View view) {
         switch (view.getId()) {

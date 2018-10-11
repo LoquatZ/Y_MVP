@@ -30,10 +30,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 杨光 on 2017/11/3
- * Describ :
+ * 项目名称: DownloadUtil
+ * 类描述: DownloadManager 下载
+ * 创建人: Yuang QQ:274122635
+ * 创建时间: 2018/10/11 下午12:04
  */
-
 public class DownloadUtil {
     private static DownloadUtil mDownloadUtil;
     private static HashMap<String, Long> downloadMap = new HashMap<String, Long>();

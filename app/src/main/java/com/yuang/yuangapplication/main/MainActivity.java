@@ -45,6 +45,11 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public Context getContext() {
         return this;
     }

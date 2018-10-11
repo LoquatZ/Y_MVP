@@ -8,7 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -52,10 +51,6 @@ public class AppUtils {
         return versioncode;
     }
 
-    public static String getIMEI(Context context) {
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return tm.getDeviceId();
-    }
 
     /**
      * 显示软键盘
@@ -68,9 +63,13 @@ public class AppUtils {
     /**
      * 隐藏软键盘
      */
-    public static void hideSoftInput(EditText et) {
-        InputMethodManager inputMethodManager = (InputMethodManager) et.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(et.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    public static void hideSoftInput(Context context, EditText et) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(et.getWindowToken(), InputMethodManager
+                    .HIDE_NOT_ALWAYS);
+        }
     }
 
     /**

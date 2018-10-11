@@ -1,10 +1,11 @@
 package com.yuang.yuangapplication.net;
 
-import com.yuang.library.base.BaseResponse;
-import com.yuang.yuangapplication.recyclerview.entity.TvBean;
+import com.yuang.yuangapplication.recyclerview.entity.GankBaseResponse;
+import com.yuang.yuangapplication.recyclerview.entity.GankItemBean;
+
+import java.util.List;
 
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -13,6 +14,6 @@ import rx.Observable;
  */
 
 public interface NetApi {
-    @GET("http://www.quanmin.tv/{url}?11211639&os=1&v=2.2.4&os=1&ver=4")
-    Observable<BaseResponse<TvBean>> getOtherList(@Path("url") String url);
+    @GET("api/data/福利/100/1")
+    Observable<GankBaseResponse<List<GankItemBean>>> getOtherList();
 }

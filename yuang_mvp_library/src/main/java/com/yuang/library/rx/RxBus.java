@@ -85,11 +85,9 @@ public class RxBus {
     @SuppressWarnings("rawtypes")
     public RxBus unregister(@NonNull Object tag,
                             @NonNull Observable<?> observable) {
-        if (null == observable)
-            return $();
         List<Subject> subjects = subjectMapper.get(tag);
         if (null != subjects) {
-            subjects.remove((Subject<?, ?>) observable);
+            subjects.remove(observable);
             if (isEmpty(subjects)) {
                 subjectMapper.remove(tag);
                 Logg.d("unregister------->"+ tag + "  size:" + subjects.size());
@@ -120,7 +118,7 @@ public class RxBus {
     }
 
     @SuppressWarnings("rawtypes")
-    public static boolean isEmpty(Collection<Subject> collection) {
+    private static boolean isEmpty(Collection<Subject> collection) {
         return null == collection || collection.isEmpty();
     }
 }

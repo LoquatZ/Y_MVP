@@ -5,7 +5,10 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 /**
- * 显示工具类
+ * 项目名称: DisplayUtils
+ * 类描述: 屏幕转换 PX <-> DP <-> SP
+ * 创建人: Yuang QQ:274122635
+ * 创建时间: 2018/10/11 下午12:03
  */
 public class DisplayUtils {
     /**

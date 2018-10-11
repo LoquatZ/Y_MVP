@@ -23,11 +23,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.yuang.library.utils.rxutils.RxFileUtils.getDataColumn;
-import static com.yuang.library.utils.rxutils.RxFileUtils.isDownloadsDocument;
-import static com.yuang.library.utils.rxutils.RxFileUtils.isExternalStorageDocument;
-import static com.yuang.library.utils.rxutils.RxFileUtils.isGooglePhotosUri;
-import static com.yuang.library.utils.rxutils.RxFileUtils.isMediaDocument;
+import static com.yuang.library.utils.rx_utils.RxFileUtils.getDataColumn;
+import static com.yuang.library.utils.rx_utils.RxFileUtils.isDownloadsDocument;
+import static com.yuang.library.utils.rx_utils.RxFileUtils.isExternalStorageDocument;
+import static com.yuang.library.utils.rx_utils.RxFileUtils.isGooglePhotosUri;
+import static com.yuang.library.utils.rx_utils.RxFileUtils.isMediaDocument;
 
 
 /**

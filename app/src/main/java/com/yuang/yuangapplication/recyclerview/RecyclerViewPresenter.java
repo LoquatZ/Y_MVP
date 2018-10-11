@@ -1,8 +1,13 @@
 package com.yuang.yuangapplication.recyclerview;
 
-import com.yuang.library.base.BaseObserver;
-import com.yuang.library.base.BaseResponse;
-import com.yuang.yuangapplication.recyclerview.entity.TvBean;
+import com.yuang.yuangapplication.recyclerview.entity.GankBaseResponse;
+import com.yuang.yuangapplication.recyclerview.entity.GankItemBean;
+
+import java.net.UnknownHostException;
+import java.util.List;
+
+import rx.Observer;
+import timber.log.Timber;
 
 /**
  * Created by Yuang on 17/12/15.
@@ -24,18 +29,25 @@ public class RecyclerViewPresenter extends RecyclerViewContract.Presenter {
 //                        Throwable::printStackTrace
 //                ));
 
-        mRxManager.add(mModel.getData(url).subscribe(new BaseObserver<BaseResponse<TvBean>>(mView) {
+        mRxManager.add(mModel.getData(url).subscribe(new Observer<GankBaseResponse<List<GankItemBean>>>() {
             @Override
-            public void onSuccess(BaseResponse<TvBean> response) {
-                mView.showContent(response.getData());
+            public void onCompleted() {
+
             }
 
             @Override
-            public void onError(Throwable throwable) {
-                super.onError(throwable);
+            public void onError(Throwable e) {
+                Timber.w(e);
+                if (e instanceof UnknownHostException) {
+                    mView.showNetworkException();
+                }
             }
 
-
+            @Override
+            public void onNext(GankBaseResponse<List<GankItemBean>> listBaseResponse) {
+                Timber.d(listBaseResponse.getResults().toString());
+                mView.showContent(listBaseResponse.getResults());
+            }
         }));
     }
 }

@@ -2,9 +2,11 @@ package com.yuang.yuangapplication.recyclerview;
 
 import com.yuang.library.base.BaseModel;
 import com.yuang.library.base.BasePresenter;
-import com.yuang.library.base.BaseResponse;
 import com.yuang.library.base.BaseView;
-import com.yuang.yuangapplication.recyclerview.entity.TvBean;
+import com.yuang.yuangapplication.recyclerview.entity.GankBaseResponse;
+import com.yuang.yuangapplication.recyclerview.entity.GankItemBean;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -15,11 +17,11 @@ import rx.Observable;
 
 public interface RecyclerViewContract {
     interface Model extends BaseModel {
-        Observable<BaseResponse<TvBean>> getData(String url);
+        Observable<GankBaseResponse<List<GankItemBean>>> getData(String url);
     }
 
     interface View extends BaseView {
-        void showContent(TvBean info);
+        void showContent(List<GankItemBean> info);
     }
 
     abstract class Presenter extends BasePresenter<Model, View> {

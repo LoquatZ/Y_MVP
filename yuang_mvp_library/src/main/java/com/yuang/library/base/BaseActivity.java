@@ -2,7 +2,6 @@ package com.yuang.library.base;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -12,16 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.jakewharton.rxbinding.view.RxView;
 import com.umeng.analytics.MobclickAgent;
 import com.yuang.library.AppManager;
 import com.yuang.library.R;
 import com.yuang.library.utils.Constants;
-import com.yuang.library.utils.Loading;
 import com.yuang.library.utils.Logg;
 import com.yuang.library.utils.TUtil;
 import com.yuang.library.utils.TitleBuilder;
 import com.yuang.library.utils.ToastUtils;
+import com.yuang.library.widget.dialog.LoadingDialog;
+import com.yuang.library.widget.toast.YToast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,10 +45,16 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     public E mModel;
     protected Context mContext;
     Unbinder binder;
-    private ProgressDialog mProgressDialog;
+    public ImmersionBar mImmersionBar;
+    protected LoadingDialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar
+                .statusBarDarkFont(false, 0.2f)
+                .init();   //所有子类都将继承这些相同的属性
         parseIntentData(getIntent(), false);//得到传递信息
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         init(savedInstanceState);
@@ -62,6 +69,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         mModel = TUtil.getT(this, 1);
         if (this instanceof BaseView) mPresenter.attachVM(this, mModel);
         this.initView(savedInstanceState);
+        this.initData();
         setListeners();
         AppManager.getAppManager().addActivity(this);
     }
@@ -70,8 +78,14 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
-        if (binder != null) binder.unbind();
-        if (mPresenter != null) mPresenter.detachVM();
+        if (binder != null && binder != Unbinder.EMPTY)
+            binder.unbind();
+        if (mPresenter != null)
+            mPresenter.detachVM();
+        this.mPresenter = null;
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();
+        loadingDialog = null;
     }
 
     public void onPause() {
@@ -96,6 +110,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -105,6 +120,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 
     /**
      * 得到传递信息
+     *
      * @param intent
      * @param isFromNewIntent
      */
@@ -128,6 +144,8 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 
     public abstract void initView(Bundle savedInstanceState);
 
+    protected abstract void initData();
+
     @Override
     public void onBackPressedSupport() {
         supportFinishAfterTransition();
@@ -139,10 +157,10 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         return new DefaultHorizontalAnimator();
     }
 
-    protected void setToolBar(Toolbar toolbar, String title,boolean navigation) {
+    protected void setToolBar(Toolbar toolbar, String title, boolean navigation) {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
-        if (navigation) {
+        if (navigation && getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
@@ -165,10 +183,11 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 
     /**
      * 使用默认的throttle设置来注册点击事件。
-     * @param view 要注册的View
+     *
+     * @param view    要注册的View
      * @param action1 点击后执行的事件
      */
-    protected void subscribeClick(View view, Action1<Void> action1){
+    protected void subscribeClick(View view, Action1<Void> action1) {
         RxView.clicks(view)
                 .throttleFirst(Constants.VIEW_THROTTLE_TIME, TimeUnit.MILLISECONDS)
                 .subscribe(action1);
@@ -176,10 +195,11 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 
     /**
      * 注册点击事件，不允许throttle。
-     * @param view 要注册的View
+     *
+     * @param view    要注册的View
      * @param action1 点击后执行的事件
      */
-    protected void subscribeClickWithoutThrottle(View view, Action1<Void> action1){
+    protected void subscribeClickWithoutThrottle(View view, Action1<Void> action1) {
         RxView.clicks(view)
                 .subscribe(action1);
     }
@@ -201,6 +221,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 
     /**
      * 快速跳转
+     *
      * @param tarActivity
      */
     public void startActivity(Class<? extends Activity> tarActivity) {
@@ -210,6 +231,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 
     /**
      * 快速打印Toast
+     *
      * @param msg
      */
     public void showToast(String msg) {
@@ -218,60 +240,59 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
 
     /**
      * 快速打印Log
+     *
      * @param msg
      */
     public void showLog(String msg) {
         Logg.i(msg);
     }
 
-    /**
-     * 加载中
-     * @param msg
-     * @param b
-     */
-    public void showLoading(String msg,boolean b) {
-        if (b) {
-            Loading.startLoading(this, msg);
-        } else {
-            Loading.stopLoading();
-        }
+    @Override
+    public void showDataException(String msg) {
+        YToast.makeCustomText(this, msg, YToast.WAEN).show();
     }
 
     @Override
-    public void showDataException(String msg) {
-        showToast(msg);
+    public void showError(String msg) {
+        YToast.makeCustomText(this, msg, YToast.ERROR).show();
     }
 
     @Override
     public void showNetworkException() {
-        showToast("网络异常，请稍后重试");
+        YToast.makeCustomText(this, "无网络连接", YToast.WAEN).show();
     }
 
     @Override
     public void showUnknownException() {
-        showToast("未知错误，请稍后重试");
+        YToast.makeCustomText(this, "未知错误", YToast.ERROR).show();
     }
 
     @Override
     public void showLoadingComplete() {
+        dismissLoadingDialog();
         //Empty implementation
     }
 
     @Override
-    public Dialog showLoadingDialog() {
-        if (mProgressDialog!=null && mProgressDialog.isShowing()){
-            mProgressDialog.dismiss();
+    public Dialog showLoadingDialog(String msg) {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
         }
-        mProgressDialog = ProgressDialog.show(this, null, "请稍后", true, false);
-        return mProgressDialog;
+        LoadingDialog.Builder builder = new LoadingDialog.Builder(this)
+                .setMessage(msg)
+                .setCancelable(true);
+        loadingDialog = builder.create();
+        loadingDialog.show();
+        return null;
     }
 
     @Override
     public void dismissLoadingDialog() {
-        if (mProgressDialog==null || (!mProgressDialog.isShowing())){
-            return ;
+        if (loadingDialog == null || !(loadingDialog.isShowing())) {
+            return;
+        } else {
+            loadingDialog.dismiss();
+            loadingDialog = null;
         }
-        mProgressDialog.dismiss();
-        mProgressDialog = null;
     }
 }

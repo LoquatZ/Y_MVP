@@ -6,6 +6,8 @@ import android.content.res.Resources;
 
 import com.yuang.library.utils.DeviceUtil;
 
+import timber.log.Timber;
+
 
 public abstract class BaseApp extends Application {
     private static BaseApp mApp;
@@ -15,6 +17,9 @@ public abstract class BaseApp extends Application {
         super.onCreate();
         mApp = this;
         DeviceUtil.init(this);
+        if (BuildConfig.LOGG_OPEN) {//Timber初始化
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     public static synchronized BaseApp getInstance() {

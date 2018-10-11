@@ -8,9 +8,9 @@ import com.yuang.library.rx.RxManager;
  * Summary:Presenter基类
  */
 public abstract class BasePresenter<M, T> {
-    public M mModel;
+    protected M mModel;
     public T mView;
-    public RxManager mRxManager = new RxManager();
+    protected RxManager mRxManager = new RxManager();
 
     public void attachVM(T v, M m) {
         this.mView = v;

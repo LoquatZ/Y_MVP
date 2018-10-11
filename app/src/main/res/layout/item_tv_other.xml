@@ -22,7 +22,8 @@
             <ImageView
                 android:id="@+id/thumnails"
                 android:layout_width="match_parent"
-                android:layout_height="97dp"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_default_cover" />
 
             <TextView
@@ -43,43 +44,6 @@
                 android:textColor="@color/white_80"
                 android:textSize="10.0sp" />
         </android.support.v7.widget.CardView>
-
-        <RelativeLayout
-            android:id="@+id/infoContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fl_headPng">
-
-            <ImageView
-                android:id="@+id/ic_head"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="6dp"
-                android:src="@drawable/ic_default_head" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/ic_head">
-
-                <TextView
-                    android:id="@+id/nickName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    tool:text="国服第一打野成成天慢各种坑" />
-
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/nickName"
-                    android:textSize="10sp"
-                    tool:text="肌肉飒飒撒" />
-            </RelativeLayout>
-        </RelativeLayout>
-
     </RelativeLayout>
 
 </FrameLayout>

@@ -1,7 +1,6 @@
 package com.yuang.library.base;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.MalformedJsonException;
@@ -20,11 +19,11 @@ import rx.Observer;
  */
 public abstract class BaseObserver<E extends BaseResponse> implements Observer<E> {
 
-    protected final String LOG_TAG = getClass().getSimpleName();
+    private final String LOG_TAG = getClass().getSimpleName();
 
     private final BaseUiInterface mUiInterface;
 
-    public BaseObserver(BaseUiInterface baseUiInterface) {
+    protected BaseObserver(BaseUiInterface baseUiInterface) {
         mUiInterface = baseUiInterface;
     }
 
@@ -47,6 +46,7 @@ public abstract class BaseObserver<E extends BaseResponse> implements Observer<E
             mUiInterface.showUnknownException();
             return;
         }
+        throwable.printStackTrace();
         //分为以下几类问题：网络连接，数据解析，客户端出错【空指针等】，服务器内部错误
         if (throwable instanceof SocketTimeoutException || throwable
                 instanceof ConnectException || throwable instanceof UnknownHostException) {
@@ -57,20 +57,23 @@ public abstract class BaseObserver<E extends BaseResponse> implements Observer<E
         } else if ((throwable instanceof HttpException)) {
             mUiInterface.showDataException("服务器错误(" + ((HttpException) throwable).code()+")");
         } else if (throwable instanceof NullPointerException) {
-            mUiInterface.showDataException("客户端开小差了，攻城狮正在修复中...");
+            mUiInterface.showDataException("客户端出异常！");
         } else {
-//            mUiInterface.showUnknownException();
+            mUiInterface.showUnknownException();
         }
     }
 
     @Override
     public void onNext(E response) {
-        Log.i("mrl","服务器大概返回"+response);
-        switch (response.getCode()) {
+        switch (response.getStatus()) {
             case BaseResponse.RESULT_CODE_SUCCESS:
                 onSuccess(response);
                 break;
             case BaseResponse.RESULT_CODE_TOKEN_EXPIRED:
+
+                break;
+            case BaseResponse.RESULT_CODE_ERROR:
+                onError(response);
                 break;
             default:
                 onDataFailure(response);
@@ -79,7 +82,25 @@ public abstract class BaseObserver<E extends BaseResponse> implements Observer<E
 
     public abstract void onSuccess(E response);
 
-    protected void onDataFailure(E response) {
+    /**
+     * 服务器返回错误
+     * @param response
+     */
+    protected void onError(E response) {
+        String msg = response.getMsg();
+        if (!TextUtils.isEmpty(msg)) {
+            mUiInterface.showError(response.getMsg());
+        }
+        else{
+            mUiInterface.showUnknownException();
+        }
+    }
+
+    /**
+     * 未知数据类型
+     * @param response
+     */
+    private void onDataFailure(E response) {
         String msg = response.getMsg();
         Logg.w("request data but get failure:" + msg);
         if (!TextUtils.isEmpty(msg)) {

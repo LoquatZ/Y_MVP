@@ -33,6 +33,20 @@ public class YPermissionsUtils {
         }
     }
 
+    //读取手机信息权限
+    public static void requestPhoneState(Context mContext, onRequestPermissionsListener onRequestPermissionsListener) {
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) mContext,
+                    new String[]{Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            onRequestPermissionsListener.onRequestBefore();
+        } else {
+            onRequestPermissionsListener.onRequestLater();
+        }
+    }
+
     //写入权限
     public static void requestWriteExternalStorage(Context mContext, onRequestPermissionsListener onRequestPermissionsListener) {
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

@@ -10,7 +10,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yalantis.ucrop.UCrop;
 import com.yuang.library.base.BaseActivity;
-import com.yuang.library.glide.GlideCircleTransform;
+import com.yuang.library.utils.DisplayUtils;
 import com.yuang.library.utils.Logg;
 import com.yuang.library.utils.YPhotoUtils;
 import com.yuang.library.utils.YUtils;
@@ -22,6 +22,7 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -48,6 +49,11 @@ public class DialogActivity extends BaseActivity {
 //        setToolBar(toolbar, "Dialog", false);
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     @OnClick(R.id.choose_photo)
     public void onViewClicked() {
         YDialogChooseImage dialogChooseImage = new YDialogChooseImage(this, TITLE);
@@ -72,13 +78,13 @@ public class DialogActivity extends BaseActivity {
                 break;
             case YPhotoUtils.CROP_IMAGE://普通裁剪后的处理
                 GlideApp.with(mContext).
-                        load(YPhotoUtils.cropImageUri).
-                        diskCacheStrategy(DiskCacheStrategy.RESOURCE).
-                        transform(new GlideCircleTransform(mContext)).
-                        thumbnail(0.5f).
-                        priority(Priority.LOW).
-                        dontAnimate().
-                        into(chooseImage);
+                        load(YPhotoUtils.cropImageUri)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .transform(new RoundedCornersTransformation(360, DisplayUtils.dp2px(this, 2)))
+                        .thumbnail(0.5f)
+                        .priority(Priority.LOW)
+                        .dontAnimate()
+                        .into(chooseImage);
                 break;
 
             case UCrop.REQUEST_CROP://UCrop裁剪之后的处理

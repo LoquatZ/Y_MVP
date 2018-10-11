@@ -2,12 +2,10 @@ package com.yuang.library.base;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +39,6 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
     protected Context mContext;
     protected Activity mActivity;
     Unbinder binder;
-    private ProgressDialog mProgressDialog;
     @Override
     public void onAttach(Context context) {
         mActivity = (Activity) context;
@@ -65,9 +62,10 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
         binder = ButterKnife.bind(this, view);
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
-        initUI(view, savedInstanceState);
-        if (this instanceof BaseView) mPresenter.attachVM(this, mModel);
         getBundle(getArguments());
+        initUI(view, savedInstanceState);
+        setListeners();
+        if (this instanceof BaseView) mPresenter.attachVM(this, mModel);
         initData();
         super.onViewCreated(view, savedInstanceState);
     }
@@ -122,10 +120,11 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
 
     }
 
-    protected void setToolBar(Toolbar toolbar, String title) {
-        toolbar.setTitle(title);
-        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
-        toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
+    /**
+     * 设置按钮监听
+     */
+    protected void setListeners() {
+        //empty implementation
     }
 
     /**
@@ -187,39 +186,52 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
 
     @Override
     public void showDataException(String msg) {
-        showToast(msg);
+        if (getActivity() != null) {
+            ((BaseActivity) getActivity()).showDataException(msg);
+        }
+    }
+
+    @Override
+    public void showError(String msg) {
+        if (getActivity() != null) {
+            ((BaseActivity) getActivity()).showError(msg);
+        }
     }
 
     @Override
     public void showNetworkException() {
-        showToast("网络异常，请稍后重试");
+        if (getActivity() != null) {
+            ((BaseActivity) getActivity()).showNetworkException();
+        }
     }
 
     @Override
     public void showUnknownException() {
-        showToast("未知错误，请稍后重试");
+        if (getActivity() != null) {
+            ((BaseActivity) getActivity()).showUnknownException();
+        }
     }
 
     @Override
     public void showLoadingComplete() {
+        if (getActivity() != null) {
+            ((BaseActivity) getActivity()).dismissLoadingDialog();
+        }
         //Empty implementation
     }
 
     @Override
-    public Dialog showLoadingDialog() {
-        if (mProgressDialog!=null && mProgressDialog.isShowing()){
-            mProgressDialog.dismiss();
+    public Dialog showLoadingDialog(String msg) {
+        if (getActivity() != null) {
+            ((BaseActivity) getActivity()).showLoadingDialog(msg);
         }
-        mProgressDialog = ProgressDialog.show(getActivity(), null, "请稍后", true, false);
-        return mProgressDialog;
+        return null;
     }
 
     @Override
     public void dismissLoadingDialog() {
-        if (mProgressDialog==null || (!mProgressDialog.isShowing())){
-            return ;
+        if (getActivity() != null) {
+            ((BaseActivity) getActivity()).dismissLoadingDialog();
         }
-        mProgressDialog.dismiss();
-        mProgressDialog = null;
     }
 }

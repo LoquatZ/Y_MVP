@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.yuang.library.widget.toast.YToast;
+
 /**
  * 网络工具类
  */
@@ -23,11 +25,9 @@ public class NetUtils {
     public static boolean isConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
         if (null == cm) {
             return false;
         }
-
         NetworkInfo info = cm.getActiveNetworkInfo();
         if (null != info && info.isConnected()) {
             if (info.getState() == NetworkInfo.State.CONNECTED) {

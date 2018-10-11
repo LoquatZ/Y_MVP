@@ -31,6 +31,11 @@ public class RxPermissionsActivity extends BaseActivity {
         setToolBar(toolbar, "获取权限", true);
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     @OnClick(R.id.get_Permissions)
     public void onViewClicked() {
         StringBuffer stringBuffer = new StringBuffer();
