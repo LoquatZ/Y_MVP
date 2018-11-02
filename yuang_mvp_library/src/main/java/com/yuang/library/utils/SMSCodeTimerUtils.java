@@ -9,11 +9,12 @@ import android.text.style.ForegroundColorSpan;
 import android.widget.Button;
 
 /**
- * Created by Yuang on 17/12/22.
- * Summary:
+ * 项目名称: SMSCodeTimerUtils
+ * 类描述: 获取短信倒计时
+ * 创建人: Yuang
+ * 创建时间: 2018/11/2 上午11:49
  */
-
-public class MesageCodeTimerUtils extends CountDownTimer {
+public class SMSCodeTimerUtils extends CountDownTimer {
     private Button btn;
 
     /**
@@ -26,7 +27,7 @@ public class MesageCodeTimerUtils extends CountDownTimer {
      * @param countDownInterval The interval along the way to receiver
      *                          {@link #onTick(long)} callbacks.
      */
-    public MesageCodeTimerUtils(Button btn, long millisInFuture, long countDownInterval) {
+    public SMSCodeTimerUtils(Button btn, long millisInFuture, long countDownInterval) {
         super(millisInFuture, countDownInterval);
         this.btn = btn;
     }

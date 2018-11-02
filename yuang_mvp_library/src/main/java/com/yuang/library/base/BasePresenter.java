@@ -10,7 +10,7 @@ import com.yuang.library.rx.RxManager;
 public abstract class BasePresenter<M, T> {
     protected M mModel;
     public T mView;
-    protected RxManager mRxManager = new RxManager();
+    public RxManager mRxManager = new RxManager();
 
     public void attachVM(T v, M m) {
         this.mView = v;

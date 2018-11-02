@@ -29,10 +29,11 @@ import static com.yuang.library.utils.rx_utils.RxFileUtils.isExternalStorageDocu
 import static com.yuang.library.utils.rx_utils.RxFileUtils.isGooglePhotosUri;
 import static com.yuang.library.utils.rx_utils.RxFileUtils.isMediaDocument;
 
-
 /**
- * Created by Yuang on 17/12/8.
- * Summary:封装了从相册/相机 获取 图片 Utils.
+ * 项目名称: YPhotoUtils
+ * 类描述: 封装了从相册/相机 获取 图片 Utils.
+ * 创建人: Yuang
+ * 创建时间: 2018/11/2 上午11:51
  */
 public class YPhotoUtils {
     public static final int GET_IMAGE_BY_CAMERA = 5001;

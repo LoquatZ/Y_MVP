@@ -19,12 +19,12 @@ public class DeviceUtil {
 
 	/**
 	 * IMEI
-	 * 
+	 *
 	 * @param
 	 * @return
 	 */
 	static String sDeviceId = null;
-	
+
 	public static String getPackname(){
 		return sContext.getPackageName();
 	}
@@ -56,9 +56,6 @@ public class DeviceUtil {
 
 	/**
 	 * IMSI
-	 * 
-	 * @param c
-	 * @param slot
 	 * @return
 	 */
 	public static String getIMSI() {

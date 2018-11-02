@@ -16,7 +16,7 @@ public abstract class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        DeviceUtil.init(this);
+        DeviceUtil.init(getAppContext());
         if (BuildConfig.LOGG_OPEN) {//Timber初始化
             Timber.plant(new Timber.DebugTree());
         }

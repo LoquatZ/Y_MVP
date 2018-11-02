@@ -5,10 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.yuang.library.R;
 import com.yuang.library.utils.Constants;
+import com.yuang.library.utils.OptAnimationLoader;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,12 +24,43 @@ import rx.functions.Action1;
  * 创建人: Yuang QQ:274122635
  * 创建时间: 2018/8/29 下午4:42
  */
-public abstract class BaseDialog extends Dialog{
+public abstract class BaseDialog extends Dialog {
 
+    private final AnimationSet mModalOutAnim;
     private Unbinder binder;
-
+    private final AnimationSet mModalInAnim;
+    private View mDialogView;
+    private boolean mCloseFromCancel;
     public BaseDialog(@NonNull Context context) {
         super(context, R.style.Dialog);
+        mModalInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.dialog_in);
+        mModalOutAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.dialog_out);
+        mModalOutAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mDialogView.setVisibility(View.GONE);
+                mDialogView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mCloseFromCancel) {
+                            cancel();
+                        } else {
+                            dismiss();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     @Override
@@ -34,6 +68,9 @@ public abstract class BaseDialog extends Dialog{
         super.onCreate(savedInstanceState);
         this.setContentView(this.getLayoutId());
         binder = ButterKnife.bind(this);
+        if (getWindow() != null) {
+            mDialogView = getWindow().getDecorView().findViewById(android.R.id.content);
+        }
         this.initView();
         this.setListeners();
     }
@@ -42,6 +79,11 @@ public abstract class BaseDialog extends Dialog{
 
 
     public abstract int getLayoutId();
+
+    @Override
+    protected void onStart() {
+        mDialogView.startAnimation(mModalInAnim);
+    }
 
     /**
      * 设置按钮监
@@ -65,5 +107,20 @@ public abstract class BaseDialog extends Dialog{
     public void dismiss() {
         super.dismiss();
         if (binder != null) binder.unbind();
+    }
+
+    private void dismissWithAnimation(boolean fromCancel) {
+        mCloseFromCancel = fromCancel;
+        mDialogView.startAnimation(mModalOutAnim);
+    }
+
+    @Override
+    public void cancel() {
+        super.cancel();
+        dismissWithAnimation(true);
+    }
+
+    public void dismissWithAnimation() {
+        dismissWithAnimation(false);
     }
 }

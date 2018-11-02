@@ -6,6 +6,7 @@ import android.util.Log;
 import com.yuang.library.BuildConfig;
 
 import okhttp3.logging.HttpLoggingInterceptor;
+import timber.log.Timber;
 
 /**
  * 项目名称: Logg
@@ -78,9 +79,9 @@ public final class Logg implements HttpLoggingInterceptor.Logger {
             String methodName = traceElement.getMethodName();
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String lineNumber = String.valueOf(traceElement.getLineNumber());
-            Log.v(resolveTag(TAG), LOG_UP_LINE);
-            Log.v(resolveTag(TAG), CENTER_LINE + fullClassName + "." + methodName + "(" + className + ".java:" + lineNumber + ")");
-            Log.v(resolveTag(TAG), LOG_END_LINE);
+            Timber.tag(resolveTag(TAG)).v(LOG_UP_LINE);
+            Timber.tag(resolveTag(TAG)).v(CENTER_LINE + fullClassName + "." + methodName + "(" + className + ".java:" + lineNumber + ")");
+            Timber.tag(resolveTag(TAG)).v(LOG_END_LINE);
         } catch (Exception e) {
             e.printStackTrace();
         }

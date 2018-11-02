@@ -85,7 +85,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         this.mPresenter = null;
         if (mImmersionBar != null)
             mImmersionBar.destroy();
-        loadingDialog = null;
+        this.loadingDialog = null;
     }
 
     public void onPause() {
