@@ -178,7 +178,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         return new TitleBuilder(this)
                 .setTitleText(title)
                 .setLeftImage(R.mipmap.ic_arrow_back_white_24dp)
-                .setLeftOnClickListener(v -> finish());
+                .setLeftOnClickListener(v -> onBackPressedSupport());
     }
 
     /**

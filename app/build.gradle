@@ -26,11 +26,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':yuang_mvp_library')
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+//    implementation 'me.yuang:yuang_mvp_library:1.0.0'
+//    implementation(name: 'yuang_mvp_library-1.0.0', ext: 'aar')
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 }
+

@@ -33,6 +33,7 @@
             android:layout_marginTop="15dp"
             android:text="加载中..."
             android:textColor="#f0f0f0"
+            android:gravity="center"
             android:textSize="15sp" />
     </LinearLayout>
 

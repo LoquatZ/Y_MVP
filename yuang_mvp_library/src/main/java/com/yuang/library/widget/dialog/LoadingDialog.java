@@ -18,13 +18,13 @@ public class LoadingDialog extends Dialog {
         super(context, themeResId);
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private Context context;
         private String message;
-        private boolean isShowMessage=true;
-        private boolean isCancelable=false;
-        private boolean isCancelOutside=false;
+        private boolean isShowMessage = true;
+        private boolean isCancelable = false;
+        private boolean isCancelOutside = false;
 
 
         public Builder(Context context) {
@@ -33,60 +33,64 @@ public class LoadingDialog extends Dialog {
 
         /**
          * 设置提示信息
+         *
          * @param message
          * @return
          */
 
-        public Builder setMessage(String message){
-            this.message=message;
+        public Builder setMessage(String message) {
+            this.message = message;
             return this;
         }
 
         /**
          * 设置是否显示提示信息
+         *
          * @param isShowMessage
          * @return
          */
-        public Builder setShowMessage(boolean isShowMessage){
-            this.isShowMessage=isShowMessage;
+        public Builder setShowMessage(boolean isShowMessage) {
+            this.isShowMessage = isShowMessage;
             return this;
         }
 
         /**
          * 设置是否可以按返回键取消
+         *
          * @param isCancelable
          * @return
          */
 
-        public Builder setCancelable(boolean isCancelable){
-            this.isCancelable=isCancelable;
+        public Builder setCancelable(boolean isCancelable) {
+            this.isCancelable = isCancelable;
             return this;
         }
 
         /**
          * 设置是否可以取消
+         *
          * @param isCancelOutside
          * @return
          */
-        public Builder setCancelOutside(boolean isCancelOutside){
-            this.isCancelOutside=isCancelOutside;
+        public Builder setCancelOutside(boolean isCancelOutside) {
+            this.isCancelOutside = isCancelOutside;
             return this;
         }
 
-        public LoadingDialog create(){
+        public LoadingDialog create() {
             LayoutInflater inflater = LayoutInflater.from(context);
-            View view=inflater.inflate(R.layout.dialog_loading,null);
-            LoadingDialog loadingDailog=new LoadingDialog(context,R.style.LoadingDialog);
-            TextView msgText= (TextView) view.findViewById(R.id.tipTextView);
-            if(isShowMessage){
+            View view = inflater.inflate(R.layout.dialog_loading, null);
+            LoadingDialog loadingDailog = new LoadingDialog(context, R.style.LoadingDialog);
+            TextView msgText = (TextView) view.findViewById(R.id.tipTextView);
+            if (isShowMessage) {
                 msgText.setText(message);
-            }else{
+            } else {
                 msgText.setVisibility(View.GONE);
             }
             loadingDailog.setContentView(view);
             loadingDailog.setCancelable(isCancelable);
             loadingDailog.setCanceledOnTouchOutside(isCancelOutside);
-            return  loadingDailog;
+            return loadingDailog;
 
         }
 

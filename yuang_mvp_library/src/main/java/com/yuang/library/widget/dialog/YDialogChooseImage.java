@@ -23,6 +23,7 @@ public class YDialogChooseImage extends YDialog {
     private TextView mTvCamera;
     private TextView mTvFile;
     private TextView mTvCancel;
+    private View dialog_view;
 
     public YDialogChooseImage(Activity context) {
         super(context);
@@ -108,7 +109,6 @@ public class YDialogChooseImage extends YDialog {
     }
 
     private void initView(final Activity activity) {
-        View dialog_view = null;
         switch (mLayoutType) {
             case TITLE:
                 dialog_view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_picker_pictrue, null);
@@ -169,10 +169,11 @@ public class YDialogChooseImage extends YDialog {
         });
         setContentView(dialog_view);
         mLayoutParams.gravity = Gravity.BOTTOM;
+        initAnim(mContext,dialog_view);
     }
 
     private void initView(final Fragment fragment) {
-        View dialog_view = null;
+        dialog_view = null;
         switch (mLayoutType) {
             case TITLE:
                 dialog_view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_picker_pictrue, null);
@@ -233,7 +234,14 @@ public class YDialogChooseImage extends YDialog {
 
         setContentView(dialog_view);
         mLayoutParams.gravity = Gravity.BOTTOM;
+        initAnim(mContext,dialog_view);
     }
+
+    @Override
+    public View getRootView() {
+        return dialog_view;
+    }
+
 
     public enum LayoutType {
         TITLE, NO_TITLE

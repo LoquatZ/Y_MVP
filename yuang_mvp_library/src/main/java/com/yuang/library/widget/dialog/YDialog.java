@@ -4,20 +4,30 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.yuang.library.R;
+import com.yuang.library.widget.popwindow.PopSimpleAnimationListener;
 
 /**
  * Created by Yuang on 17/12/8.
  * Summary:Dialog
  */
-public class YDialog extends Dialog {
+public abstract class YDialog extends Dialog {
 
     protected Context mContext;
 
     protected LayoutParams mLayoutParams;
+
+    private Animation mAlphaOpenAnimation;
+    private Animation mAlphaCloseAnimation;
+    private Animation mPopOpenAnimation;
+    private Animation mPopCloseAnimation;
+    private boolean mIsDismissed = true;
 
     public LayoutParams getLayoutParams() {
         return mLayoutParams;
@@ -121,5 +131,59 @@ public class YDialog extends Dialog {
 
     public void setOnWhole() {
         getWindow().setType(LayoutParams.TYPE_SYSTEM_ALERT);
+    }
+
+    public abstract View getRootView();
+
+    protected void initAnim(Context context, View mRootLayout) {
+        mPopOpenAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.pop_action_sheet_enter);
+        mPopCloseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.pop_action_sheet_exit);
+        mPopCloseAnimation.setAnimationListener(new PopSimpleAnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mRootLayout.post(mDismissRunnable);
+            }
+        });
+
+        mAlphaOpenAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.pop_alpha_enter);
+        mAlphaCloseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.pop_alpha_exit);
+        mAlphaCloseAnimation.setAnimationListener(new PopSimpleAnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mRootLayout.startAnimation(mPopCloseAnimation);
+            }
+        });
+    }
+
+    private Runnable mDismissRunnable = new Runnable() {
+        @Override
+        public void run() {
+            YDialog.super.dismiss();
+        }
+    };
+
+    @Override
+    public void dismiss() {
+        executeExitAnim();
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        if (mIsDismissed) {
+            mIsDismissed = false;
+            if (getRootView() != null) {
+                getRootView().startAnimation(mPopOpenAnimation);
+            }
+        }
+    }
+
+    private void executeExitAnim() {
+        if (!mIsDismissed) {
+            mIsDismissed = true;
+            if (getRootView() != null) {
+                getRootView().startAnimation(mPopCloseAnimation);
+            }
+        }
     }
 }

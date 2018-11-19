@@ -17,6 +17,12 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
+/**
+ * 项目名称: OptAnimationLoader
+ * 类描述: 加载Opt动画
+ * 创建人: Yuang
+ * 创建时间: 2018/11/19 3:03 PM
+ */
 public class OptAnimationLoader {
 
     public static Animation loadAnimation(Context context, int id)

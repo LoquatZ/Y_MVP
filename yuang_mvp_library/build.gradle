@@ -6,7 +6,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -79,3 +79,4 @@ dependencies {
     //Log
     api 'com.jakewharton.timber:timber:4.7.0'
 }
+apply from: '../bintray.gradle'

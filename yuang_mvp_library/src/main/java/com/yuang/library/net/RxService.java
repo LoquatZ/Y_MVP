@@ -36,7 +36,7 @@ public class RxService {
 //                }
 //            })
             //设置Cache
-//            .addNetworkInterceptor(cacheInterceptor)//缓存方面需要加入这个拦截器
+            .addNetworkInterceptor(cacheInterceptor)//缓存方面需要加入这个拦截器
 //            .addNetworkInterceptor(new Interceptor() {
 //                @Override
 //                public Response intercept(Chain chain) throws IOException {

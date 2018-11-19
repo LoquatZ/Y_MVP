@@ -8,12 +8,18 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.io.File;
 
+import timber.log.Timber;
+/**
+ * 项目名称: AppUtils
+ * 类描述:
+ * 创建人: Yuang
+ * 创建时间: 2018/11/19 2:59 PM
+ */
 public class AppUtils {
 
     /**
@@ -30,7 +36,7 @@ public class AppUtils {
                 return "";
             }
         } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
+            Timber.e(e, "Exception");
         }
         return versionName;
     }
@@ -46,7 +52,7 @@ public class AppUtils {
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
             versioncode = pi.versionCode;
         } catch (Exception e) {
-            Log.e("VersionInfo", "Exception", e);
+            Timber.e(e, "Exception");
         }
         return versioncode;
     }
@@ -94,7 +100,6 @@ public class AppUtils {
     public static void promptInstall(Context context, Uri data) {
         Intent promptInstall = new Intent(Intent.ACTION_VIEW)
                 .setDataAndType(data, "application/vnd.android.package-archive");
-        // FLAG_ACTIVITY_NEW_TASK 可以保证安装成功时可以正常打开 app
         promptInstall.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(promptInstall);
     }

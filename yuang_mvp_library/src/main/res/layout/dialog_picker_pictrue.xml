@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:layout_marginBottom="10dp"
@@ -16,25 +16,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="请选择图片来源"
-            android:textColor="#b9b9b9" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="0.1dp"
-            android:background="#b9b9b9" />
-
-        <TextView
             android:id="@+id/tv_camera"
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:text="照相机"
+            android:text="拍照"
             android:textColor="#FF4081"
-            android:textSize="16sp" />
+            android:textSize="18dp" />
 
         <View
             android:layout_width="fill_parent"
@@ -46,9 +34,9 @@
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:text="相册"
+            android:text="从相册选择"
             android:textColor="#009EE7"
-            android:textSize="16sp" />
+            android:textSize="18dp" />
 
 
     </LinearLayout>
@@ -64,12 +52,12 @@
         <TextView
             android:id="@+id/tv_cancel"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:text="取消"
-            android:textColor="#cccccc"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#009EE7"
+            android:textSize="16dp"/>
 
     </LinearLayout>
 </LinearLayout>

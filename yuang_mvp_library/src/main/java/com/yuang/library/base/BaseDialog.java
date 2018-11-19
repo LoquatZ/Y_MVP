@@ -31,6 +31,7 @@ public abstract class BaseDialog extends Dialog {
     private final AnimationSet mModalInAnim;
     private View mDialogView;
     private boolean mCloseFromCancel;
+
     public BaseDialog(@NonNull Context context) {
         super(context, R.style.Dialog);
         mModalInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.dialog_in);

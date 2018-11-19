@@ -5,10 +5,14 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yuang.library.R;
+
+import java.lang.reflect.Field;
 
 
 /**
@@ -18,6 +22,12 @@ import com.yuang.library.R;
  * 按钮都默认不显示,只有在你调用setLeftText时才会显示左侧按钮文字,图片同理
  * 图片或文字的点击事件都用Left/RightOnClickListener
  */
+/**
+ * 项目名称: TitleBuilder
+ * 类描述: Toolbar
+ * 创建人: Yuang
+ * 创建时间: 2018/11/19 3:04 PM
+ */
 public class TitleBuilder {
 
     private View rootView;
@@ -26,6 +36,7 @@ public class TitleBuilder {
     private ImageView ivRight;
     private TextView tvLeft;
     private TextView tvRight;
+    private View status_bar;
 
     public View getRootView() {
         return rootView;
@@ -64,13 +75,15 @@ public class TitleBuilder {
         ivRight = (ImageView) rootView.findViewById(R.id.titlebar_iv_right);
         tvLeft = (TextView) rootView.findViewById(R.id.titlebar_tv_left);
         tvRight = (TextView) rootView.findViewById(R.id.titlebar_tv_right);
+        status_bar = rootView.findViewById(R.id.status_bar);
+        setViewFullScreen(status_bar,getStatusBarHeight(context));
     }
 
     /**
      * Fragment中使用这个构造方法
      */
-    public TitleBuilder(View context) {
-        rootView = context.findViewById(R.id.rl_titlebar);
+    public TitleBuilder(View view,Context context) {
+        rootView = view.findViewById(R.id.rl_titlebar);
         if (rootView == null) {
             return;
         }
@@ -79,6 +92,8 @@ public class TitleBuilder {
         ivRight = (ImageView) rootView.findViewById(R.id.titlebar_iv_right);
         tvLeft = (TextView) rootView.findViewById(R.id.titlebar_tv_left);
         tvRight = (TextView) rootView.findViewById(R.id.titlebar_tv_right);
+        status_bar = rootView.findViewById(R.id.status_bar);
+        setViewFullScreen(status_bar,getStatusBarHeight(context));
     }
 
     // title
@@ -152,6 +167,43 @@ public class TitleBuilder {
 
     public View build() {
         return rootView;
+    }
+
+    private int getStatusBarHeight(Context context) {
+        Class<?> c = null;
+
+        Object obj = null;
+
+        Field field = null;
+
+        int x = 0, sbar = 0;
+
+        try {
+
+            c = Class.forName("com.android.internal.R$dimen");
+
+            obj = c.newInstance();
+
+            field = c.getField("status_bar_height");
+
+            x = Integer.parseInt(field.get(obj).toString());
+
+            sbar = context.getResources().getDimensionPixelSize(x);
+
+        } catch (Exception e1) {
+
+            e1.printStackTrace();
+
+        }
+
+        return sbar;
+    }
+
+    private void setViewFullScreen(View view, int h) {
+        ViewGroup.MarginLayoutParams margin = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(margin);
+        layoutParams.height = h;
+        view.setLayoutParams(layoutParams);
     }
 
 }

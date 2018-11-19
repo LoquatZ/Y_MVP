@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 package com.yuang.library.utils;
-
 /**
- * ================================================
- * Created by JessYan on 2018/9/14 14:10
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
+ * 项目名称: UrlEncoderUtils
+ * 类描述: URLEncode
+ * 创建人: Yuang
+ * 创建时间: 2018/11/19 3:04 PM
  */
 public class UrlEncoderUtils {
 
