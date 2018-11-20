@@ -2,35 +2,27 @@ package com.yuang.yuangapplication.main;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.yuang.library.base.BaseActivity;
 import com.yuang.yuangapplication.R;
-import com.yuang.yuangapplication.banner.BannerActivity;
-import com.yuang.yuangapplication.dialog.DialogActivity;
-import com.yuang.yuangapplication.popwindow.PopWindowActivity;
-import com.yuang.yuangapplication.recyclerview.RecyclerViewActivity;
-import com.yuang.yuangapplication.rxpermissions.RxPermissionsActivity;
+import com.yuang.yuangapplication.entity.ActivityBean;
+
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter, MainModel> implements MainContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.baserecyclerview)
-    CardView baserecyclerview;
-    @BindView(R.id.rxpermissions)
-    CardView rxpermissions;
-    @BindView(R.id.banner)
-    CardView banner;
-    @BindView(R.id.dialog)
-    CardView dialog;
-    @BindView(R.id.pop)
-    CardView pop;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    private BaseQuickAdapter<ActivityBean, BaseViewHolder> mAdapter;
 
     @Override
     public int getLayoutId() {
@@ -39,13 +31,29 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setToolBar(toolbar, "YuangLibrary", false);
+        setToolBar(toolbar, "Y_Library", false);
+        initRecyclerView();
+    }
 
+    private void initRecyclerView() {
+        mAdapter = new BaseQuickAdapter<ActivityBean, BaseViewHolder>(R.layout.item_recycler_view_main) {
+            @Override
+            protected void convert(BaseViewHolder helper, ActivityBean item) {
+                helper.setText(R.id.item, item.getActivityName());
+                helper.addOnClickListener(R.id.item);
+            }
+        };
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            ActivityBean activityBean = (ActivityBean) adapter.getData().get(position);
+            startActivity(activityBean.getActivityClass());
+        });
     }
 
     @Override
     protected void initData() {
-
+        mPresenter.getActivity();
     }
 
     @Override
@@ -53,26 +61,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
         return this;
     }
 
-    @OnClick({R.id.baserecyclerview, R.id.rxpermissions, R.id.banner, R.id.dialog,R.id.pop,R.id.webview})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.baserecyclerview:
-                startActivity(RecyclerViewActivity.class);
-                break;
-            case R.id.rxpermissions:
-                startActivity(RxPermissionsActivity.class);
-                break;
-            case R.id.banner:
-                startActivity(BannerActivity.class);
-                break;
-            case R.id.dialog:
-                startActivity(DialogActivity.class);
-                break;
-            case R.id.pop:
-                startActivity(PopWindowActivity.class);
-                break;
-            case R.id.webview:
-                break;
-        }
+    @Override
+    public void setActivity(List<ActivityBean> activity) {
+        mAdapter.setNewData(activity);
     }
+
 }

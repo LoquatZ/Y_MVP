@@ -2,7 +2,9 @@ package com.yuang.yuangapplication.recyclerview;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,22 +17,31 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yuang.library.base.BaseActivity;
+import com.yuang.library.utils.AdapterUtils;
 import com.yuang.yuangapplication.R;
-import com.yuang.yuangapplication.recyclerview.entity.GankItemBean;
+import com.yuang.yuangapplication.entity.GankItemBean;
 import com.yuang.yuangapplication.utils.GlideApp;
 
 import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 项目名称: RecyclerViewActivity
+ * 类描述: RecyclerViewDemo
+ * 创建人: Yuang
+ * 创建时间: 2018/11/20 5:05 PM
+ */
 public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, RecyclerViewModel>
         implements RecyclerViewContract.View {
 
-    @BindView(R.id.recyclerview)
-    SwipeMenuRecyclerView recyclerview;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    private BaseQuickAdapter<GankItemBean, BaseViewHolder> baseQuickAdapter;
+    @BindView(R.id.refreshLayout)
+    SwipeRefreshLayout refreshLayout;
+    private BaseQuickAdapter<GankItemBean, BaseViewHolder> mAdapter;
 
     @Override
     public int getLayoutId() {
@@ -40,41 +51,36 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
     @Override
     public void initView(Bundle savedInstanceState) {
         setToolBar(toolbar, "RecyclerViewActivity", true);
-        baseQuickAdapter = new BaseQuickAdapter<GankItemBean, BaseViewHolder>(R.layout.item_tv_other) {
+        refreshLayout.setRefreshing(true);
+        mAdapter = new BaseQuickAdapter<GankItemBean, BaseViewHolder>(R.layout.item_tv_other) {
             @Override
             protected void convert(BaseViewHolder helper, GankItemBean item) {
-                //Glide在加载GridView等时,由于ImageView和Bitmap实际大小不符合,第一次时加载可能会变形(我这里出现了放大),必须在加载前再次固定ImageView大小
-                GlideApp.with(mContext)
+                GlideApp.with(getContext())
                         .load(item.getUrl())
-                        .thumbnail(0.5f)
-                        .transition(new DrawableTransitionOptions().crossFade(600))
+                        .thumbnail(0.4f)//缩略图尺寸
+//                        .skipMemoryCache(true)//跳过缓存到内存
+                        .transition(new DrawableTransitionOptions().crossFade())//缩放动画
                         .into((ImageView) helper.getView(R.id.thumnails));
             }
         };
-        baseQuickAdapter.openLoadAnimation();
-        baseQuickAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                mPresenter.getData("json/categories/lol/list.json");
-            }
-        },recyclerview);
-
-        recyclerview.setLayoutManager(new GridLayoutManager(mContext, 2));
-        recyclerview.setSwipeMenuCreator(swipeMenuCreator);
-        recyclerview.setSwipeMenuItemClickListener(mMenuItemClickListener);
-        recyclerview.setAdapter(baseQuickAdapter);
-
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        mAdapter.setOnLoadMoreListener(() -> mPresenter.getNextPage(), recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+//        recyclerView.setSwipeMenuCreator(swipeMenuCreator);
+//        recyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
+        recyclerView.setAdapter(mAdapter);
+        refreshLayout.setOnRefreshListener(() -> mPresenter.getFirstPage());
     }
 
     @Override
     protected void initData() {
-
+        mPresenter.getFirstPage();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        baseQuickAdapter = null;
+        mAdapter = null;
     }
 
     /**
@@ -116,7 +122,8 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
     }
 
     @Override
-    public void showContent(List<GankItemBean> info) {
-        baseQuickAdapter.setNewData(info);
+    public void showContent(List<GankItemBean> info, int page, int size) {
+        AdapterUtils.setData(info, mAdapter, page, size);
+        refreshLayout.setRefreshing(false);
     }
 }

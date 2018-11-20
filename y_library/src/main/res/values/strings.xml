@@ -2,4 +2,5 @@
     <string name="app_name">Yuang_MVP_Library</string>
     <string name="dialog_positive">确定</string>
     <string name="dialog_negative">取消</string>
+    <string name="empty">空空如也~</string>
 </resources>

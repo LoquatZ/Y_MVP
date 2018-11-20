@@ -1,5 +1,6 @@
 package com.yuang.yuangapplication;
 
+import com.squareup.leakcanary.LeakCanary;
 import com.yuang.library.BaseApp;
 
 public class App extends BaseApp {
@@ -13,5 +14,9 @@ public class App extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 }

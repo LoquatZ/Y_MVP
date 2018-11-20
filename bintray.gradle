@@ -2,7 +2,12 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+boolean isHasFile = false
+if (project.rootProject.findProject('local.properties') != null){
+    isHasFile = true
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
 def gitUrl = 'https://github.com/YuangOG/Y_MVP.git'   // Git仓库的url
 def siteUrl = 'https://github.com/YuangOG/Y_MVP'   // 项目的主页
 
@@ -11,8 +16,8 @@ group = "me.yuang"
 
 
 bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray_user")
+    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray_apikey")
 
     pkg {
         repo = 'maven'

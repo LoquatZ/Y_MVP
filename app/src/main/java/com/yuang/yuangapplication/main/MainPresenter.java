@@ -10,4 +10,9 @@ public class MainPresenter extends MainContract.Presenter {
     public void onStart() {
 
     }
+
+    @Override
+    void getActivity() {
+        mView.setActivity(mModel.getActivity());
+    }
 }
