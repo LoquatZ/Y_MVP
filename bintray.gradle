@@ -3,8 +3,8 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def gitUrl = 'https://YuangYuang@bitbucket.org/YuangYuang/yuanglibrary.git'   // Git仓库的url
-def siteUrl = 'https://bintray.com/yuang/Maven/Y_MVP'   // 项目的主页
+def gitUrl = 'https://github.com/YuangOG/Y_MVP.git'   // Git仓库的url
+def siteUrl = 'https://github.com/YuangOG/Y_MVP'   // 项目的主页
 
 version = rootProject.ext["versionName"]
 group = "me.yuang"
@@ -24,7 +24,7 @@ bintray {
 
         version {
             name = rootProject.ext["versionName"]
-            desc = 'A common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,RxJava,Retrofit... ),to make your developing quicker and easier.'
+            desc = 'Android Applications developing based on MVP.'
             released = new Date()
             vcsTag = 'v' + rootProject.ext["versionName"]
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
@@ -43,7 +43,7 @@ install {
                 packaging 'aar'
                 // Add your description here
                 name POM_NAME
-                description 'A common Architecture for Android Applications developing based on MVP，integrates many Open Source Projects( like Dagger2,RxJava,Retrofit... ),to make your developing quicker and easier.'
+                description 'Android Applications developing based on MVP.'
                 url siteUrl
                 // Set your license
                 licenses {
@@ -54,9 +54,9 @@ install {
                 }
                 developers {
                     developer {
-                        id 'Yuang'        //填写bintray或者github的用户名
+                        id 'YuangOG'        //填写bintray或者github的用户名
                         name 'Yuang'         //姓名，可以是中文
-                        email 'yuang18698733990@gmail.com'
+                        email 'yuang.zhoucy@gmail.com'
                     }
                 }
                 scm {
