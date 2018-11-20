@@ -13,7 +13,6 @@ import com.yuang.yuangapplication.dialog.DialogActivity;
 import com.yuang.yuangapplication.popwindow.PopWindowActivity;
 import com.yuang.yuangapplication.recyclerview.RecyclerViewActivity;
 import com.yuang.yuangapplication.rxpermissions.RxPermissionsActivity;
-import com.yuang.yuangapplication.webview.WebViewActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -69,12 +68,10 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
             case R.id.dialog:
                 startActivity(DialogActivity.class);
                 break;
-
             case R.id.pop:
                 startActivity(PopWindowActivity.class);
                 break;
             case R.id.webview:
-                startActivity(WebViewActivity.class);
                 break;
         }
     }

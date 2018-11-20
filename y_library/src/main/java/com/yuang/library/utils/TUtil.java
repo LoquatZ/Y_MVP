@@ -6,7 +6,6 @@ import java.lang.reflect.ParameterizedType;
  * Created by Yuang on 17/12/8.
  * Summary:泛型管理
  */
-
 public class TUtil {
     public static <T> T getT(Object o, int i) {
         try {

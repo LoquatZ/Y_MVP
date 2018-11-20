@@ -1,1 +1,1 @@
-include ':app', ':yuang_mvp_library'
+include ':app', ':y_library'

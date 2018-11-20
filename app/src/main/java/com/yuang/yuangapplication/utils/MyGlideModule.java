@@ -20,20 +20,9 @@ public class MyGlideModule extends AppGlideModule {
 
     @Override
     public void applyOptions(final Context context, GlideBuilder builder) {
-        //获取内存的默认配置
-//        MemorySizeCalculator calculator = new MemorySizeCalculator.Builder(context).build();
-//        int defaultMemoryCacheSize = calculator.getMemoryCacheSize();
-//        int defaultBitmapPoolSize = calculator.getBitmapPoolSize();
-//        int customMemoryCacheSize = (int) (1.2 * defaultMemoryCacheSize);
-//        int customBitmapPoolSize = (int) (1.2 * defaultBitmapPoolSize);
-//        builder.setMemoryCache(new LruResourceCache(customMemoryCacheSize));
-//        builder.setBitmapPool(new LruBitmapPool(customBitmapPoolSize));
-
         //内存缓存相关,默认是24m
         int memoryCacheSizeBytes = 1024 * 1024 * 20; // 20mb
         builder.setMemoryCache(new LruResourceCache(memoryCacheSizeBytes));
-
-
         //设置磁盘缓存及其路径
         //
         int MAX_CACHE_SIZE = 100 * 1024 * 1024;

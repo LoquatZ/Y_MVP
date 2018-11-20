@@ -7,12 +7,14 @@
         <item name="android:textColor">@color/txt_black</item>
     </style>
 
+
     <style name="TextViewSubhead" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/txt_black</item>
     </style>
 
+    <!--Toolbar-->
     <style name="MyToolbar" parent="android:Widget">
         <item name="titleTextAppearance">@style/ToolBarTitle</item>
         <!--<item name="subtitleTextAppearance">@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle</item>-->
@@ -31,6 +33,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!--PopWindow-->
     <style name="PopWindowStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@android:color/transparent</item>
@@ -52,22 +55,13 @@
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
+    <!--Toast-->
     <style name="toast_style">
         <item name="android:windowEnterAnimation">@anim/top_in</item>
         <item name="android:windowExitAnimation">@anim/top_out</item>
     </style>
 
-    <style name="toolBar">
-        <item name="colorControlNormal">#ffffff</item>
-        <item name="android:homeAsUpIndicator">@mipmap/ic_back</item>
-        <item name="android:titleTextStyle">@style/titlestyle</item>
-
-    </style>
-
-    <style name="titlestyle">
-        <item name="android:textSize">12sp</item>
-    </style>
-
+    <!--Dialog-->
     <style name="Dialog" parent="Animation.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@android:color/transparent</item>
@@ -80,7 +74,7 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
-
+    <!--LoadingDialog-->
     <style name="LoadingDialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>

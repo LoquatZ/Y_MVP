@@ -23,12 +23,6 @@ public class RecyclerViewPresenter extends RecyclerViewContract.Presenter {
 
     @Override
     public void getData(String url) {
-//        mRxManager.add(mModel.getData(url)
-//                .subscribe(
-//                        data -> mView.showContent(data),
-//                        Throwable::printStackTrace
-//                ));
-
         mRxManager.add(mModel.getData(url).subscribe(new Observer<GankBaseResponse<List<GankItemBean>>>() {
             @Override
             public void onCompleted() {
