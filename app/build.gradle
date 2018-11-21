@@ -27,10 +27,9 @@ android {
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':y_library')
+//    implementation project(':y_library')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-//    implementation 'me.yuang:yuang_mvp_library:1.0.0'
-//    implementation(name: 'yuang_mvp_library-1.0.0', ext: 'aar')
+    implementation 'me.yuang:y_library:1.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'

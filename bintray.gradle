@@ -2,11 +2,11 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 Properties properties = new Properties()
-boolean isHasFile = false
-if (project.rootProject.findProject('local.properties') != null){
-    isHasFile = true
+boolean isHasFile = true
+//if (project.rootProject.findProject('local.properties') != null){
+//    isHasFile = true
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-}
+//}
 
 def gitUrl = 'https://github.com/YuangOG/Y_MVP.git'   // Git仓库的url
 def siteUrl = 'https://github.com/YuangOG/Y_MVP'   // 项目的主页
