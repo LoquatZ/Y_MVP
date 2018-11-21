@@ -45,8 +45,7 @@ public class DialogActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        initBackTitle("Dialog");
-//        setToolBar(toolbar, "Dialog", false);
+        initBackTitle("Dialog").setBackground(R.drawable.bg_toolbar);
     }
 
     @Override

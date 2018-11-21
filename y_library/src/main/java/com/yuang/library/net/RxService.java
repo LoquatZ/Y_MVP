@@ -29,9 +29,6 @@ public class RxService {
             //SSL证书
             .sslSocketFactory(TrustManager.getUnsafeOkHttpClient())
             .hostnameVerifier(org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)
-            //设置Cache
-            .addNetworkInterceptor(new CacheInterceptor())//缓存方面需要加入这个拦截器
-            .cache(HttpCache.getCache())
             //拼接请求体增加参数
             .addNetworkInterceptor(new Interceptor() {
                 @Override
@@ -54,6 +51,9 @@ public class RxService {
                     return chain.proceed(request);
                 }
             })
+            //设置Cache
+            .addNetworkInterceptor(new CacheInterceptor())//缓存方面需要加入这个拦截器
+            .cache(HttpCache.getCache())
             //添加HTTPLog
             .addInterceptor(new YHttpLoggingInterceptor(new DefaultFormatPrinter())
                     .setLevel(BuildConfig.DEBUG ? YHttpLoggingInterceptor.Level.ALL : YHttpLoggingInterceptor.Level.NONE))

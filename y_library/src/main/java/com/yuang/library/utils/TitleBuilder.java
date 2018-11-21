@@ -2,6 +2,7 @@ package com.yuang.library.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -76,7 +77,10 @@ public class TitleBuilder {
         tvLeft = (TextView) rootView.findViewById(R.id.titlebar_tv_left);
         tvRight = (TextView) rootView.findViewById(R.id.titlebar_tv_right);
         status_bar = rootView.findViewById(R.id.status_bar);
-        setViewFullScreen(status_bar,getStatusBarHeight(context));
+        //是否沉浸
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setViewFullScreen(status_bar,getStatusBarHeight(context));
+        }
     }
 
     /**
@@ -113,6 +117,11 @@ public class TitleBuilder {
     public TitleBuilder setLeftImage(int resId) {
         ivLeft.setVisibility(resId > 0 ? View.VISIBLE : View.GONE);
         ivLeft.setImageResource(resId);
+        return this;
+    }
+
+    public TitleBuilder setBackground(int resID) {
+        rootView.setBackgroundResource(resID);
         return this;
     }
 

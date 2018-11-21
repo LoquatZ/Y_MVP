@@ -180,7 +180,7 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
     }
 
     public void showLog(String msg) {
-        Logg.i(msg);
+        Logg.d(msg);
     }
 
 

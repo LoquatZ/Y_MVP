@@ -67,4 +67,5 @@
 
     <color name="red_normal">#d54b30</color>
     <color name="red_pressed">#d54b30</color>
+    <color name="tab_un_select">#C9C9C9</color>
 </resources>

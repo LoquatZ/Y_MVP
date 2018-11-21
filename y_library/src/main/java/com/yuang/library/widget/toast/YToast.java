@@ -12,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yuang.library.BaseApp;
 import com.yuang.library.R;
+import com.yuang.library.utils.Preconditions;
 
 import java.lang.reflect.Field;
+
 /**
  * 项目名称: YToast
  * 类描述: 防IOS Toast 弹窗
@@ -22,11 +25,7 @@ import java.lang.reflect.Field;
  * 创建时间: 2018/10/11 下午1:48
  */
 public class YToast extends Toast {
-
     private static Toast lastInstance;
-    public static final int SUCCESS = 1;
-    public static final int ERROR = 2;
-    public static final int WAEN = 3;
     /**
      * Construct an empty Toast object.  You must call {@link #setView} before you
      * can call {@link #show}.
@@ -34,19 +33,19 @@ public class YToast extends Toast {
      * @param context The context to use.  Usually your {@link Application}
      *                or {@link Activity} object.
      */
-    public YToast(Context context) {
+    private YToast(Context context) {
         super(context);
     }
 
-    public static YToast makeCustomText(Context context, CharSequence text,
-                                        int toastType) {
-        YToast toast = new YToast(context);
+    public static YToast makeCustomText(CharSequence text,
+                                        YToastStyle toastType) {
+        Preconditions.checkNotNull(BaseApp.getAppContext());
+        YToast toast = new YToast(BaseApp.getAppContext());
         /*设置Toast的位置*/
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
         /*让Toast显示为我们自定义的样子*/
-        toast.setView(getToastView(context, text,toastType));
-
+        toast.setView(getToastView(BaseApp.getAppContext(), text, toastType));
         try {
             Object mTN = getField(toast.getClass().getSuperclass(), toast, "mTN");
             if (mTN != null) {
@@ -60,7 +59,6 @@ public class YToast extends Toast {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return toast;
     }
 
@@ -73,24 +71,24 @@ public class YToast extends Toast {
         lastInstance = this;
     }
 
-    public static YToast makeCustomText(Context context, int text,
-                                        int toastType) {
-        return makeCustomText(context, context.getString(text), toastType);
+    @Override
+    public void cancel() {
+        super.cancel();
     }
 
-    public static View getToastView(Context context, CharSequence msg,int toastType) {
+    private static View getToastView(Context context, CharSequence msg, YToastStyle style) {
         LayoutInflater inflate = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflate.inflate(R.layout.custom_toast, null);
         ImageView toastIcom = v.findViewById(R.id.toast_icon);
-        switch (toastType) {
+        switch (style) {
             case SUCCESS:
                 toastIcom.setImageResource(R.drawable.ic_prompt_success);
                 break;
             case ERROR:
                 toastIcom.setImageResource(R.drawable.ic_prompt_error);
                 break;
-            case WAEN:
+            case WARN:
                 toastIcom.setImageResource(R.drawable.ic_prompt_warn);
                 break;
         }
@@ -114,5 +112,9 @@ public class YToast extends Toast {
             return field.get(object);
         }
         return null;
+    }
+
+    public enum YToastStyle {
+        SUCCESS, ERROR, WARN
     }
 }

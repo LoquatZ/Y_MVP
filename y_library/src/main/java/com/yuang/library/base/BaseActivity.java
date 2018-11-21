@@ -163,7 +163,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         if (navigation && getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+            toolbar.setNavigationIcon(R.mipmap.ic_back);
             toolbar.setNavigationOnClickListener(view -> onBackPressedSupport());
         }
     }
@@ -177,7 +177,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     protected TitleBuilder initBackTitle(String title) {
         return new TitleBuilder(this)
                 .setTitleText(title)
-                .setLeftImage(R.mipmap.ic_arrow_back_white_24dp)
+                .setLeftImage(R.mipmap.ic_back)
                 .setLeftOnClickListener(v -> onBackPressedSupport());
     }
 
@@ -244,27 +244,27 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
      * @param msg
      */
     public void showLog(String msg) {
-        Logg.i(msg);
+        Logg.d(msg);
     }
 
     @Override
     public void showDataException(String msg) {
-        YToast.makeCustomText(this, msg, YToast.WAEN).show();
+        YToast.makeCustomText(msg, YToast.YToastStyle.WARN).show();
     }
 
     @Override
     public void showError(String msg) {
-        YToast.makeCustomText(this, msg, YToast.ERROR).show();
+        YToast.makeCustomText(msg, YToast.YToastStyle.ERROR).show();
     }
 
     @Override
     public void showNetworkException() {
-        YToast.makeCustomText(this, "无网络连接", YToast.WAEN).show();
+        YToast.makeCustomText("无网络连接", YToast.YToastStyle.WARN).show();
     }
 
     @Override
     public void showUnknownException() {
-        YToast.makeCustomText(this, "未知错误", YToast.ERROR).show();
+        YToast.makeCustomText("未知错误", YToast.YToastStyle.ERROR).show();
     }
 
     @Override
@@ -283,7 +283,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
                 .setCancelable(true);
         loadingDialog = builder.create();
         loadingDialog.show();
-        return null;
+        return loadingDialog;
     }
 
     @Override

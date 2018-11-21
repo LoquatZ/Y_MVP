@@ -117,7 +117,7 @@ public final class YHttpLoggingInterceptor implements Interceptor {
         try {
             originalResponse = chain.proceed(request);
         } catch (Exception e) {
-            Timber.w("Http Error: " + e);
+            Timber.w(e);
             throw e;
         }
         long t2 = logResponse ? System.nanoTime() : 0;

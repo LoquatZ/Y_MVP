@@ -3,6 +3,7 @@ package com.yuang.yuangapplication.main;
 import com.yuang.yuangapplication.banner.BannerActivity;
 import com.yuang.yuangapplication.dialog.DialogActivity;
 import com.yuang.yuangapplication.entity.ActivityBean;
+import com.yuang.yuangapplication.fragmentation.FragmentationActivity;
 import com.yuang.yuangapplication.recyclerview.RecyclerViewActivity;
 import com.yuang.yuangapplication.rxpermissions.RxPermissionsActivity;
 
@@ -23,6 +24,7 @@ public class MainModel implements MainContract.Model {
         activityBeans.add(new ActivityBean(RxPermissionsActivity.class,"RxPermissionsActivity"));
         activityBeans.add(new ActivityBean(BannerActivity.class,"BannerActivity"));
         activityBeans.add(new ActivityBean(DialogActivity.class,"DialogActivity"));
+        activityBeans.add(new ActivityBean(FragmentationActivity.class,"FragmentationActivity"));
         return activityBeans;
     }
 }
