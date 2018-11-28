@@ -1,5 +1,6 @@
 package com.yuang.library.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -9,6 +10,8 @@ import android.text.TextUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import timber.log.Timber;
 
 public class DeviceUtil {
 	static Context sContext = null;
@@ -29,28 +32,32 @@ public class DeviceUtil {
 		return sContext.getPackageName();
 	}
 
+	@SuppressLint({"MissingPermission", "HardwareIds"})
 	public static String getIMEI() {
-		if (sDeviceId == null) {
+		if (TextUtils.isEmpty(sDeviceId)) {
 			String value = null;
 			try {
 				TelephonyManager tm = (TelephonyManager) sContext.getSystemService(Context.TELEPHONY_SERVICE);
-				value = tm.getDeviceId();
+				if (tm != null) {
+					value = tm.getDeviceId();
+				}
 			} catch (Exception e) {
+				Timber.e(e);
 			}
 
 			sDeviceId = value;
 			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < sDeviceId.length(); i++) {
-				char ch = sDeviceId.charAt(i);
-				if (ch > '9' || ch < '0') {
-					ch = (char) ('0' + (((int) ch) % 10));
+			if (sDeviceId != null) {
+				for (int i = 0; i < sDeviceId.length(); i++) {
+					char ch = sDeviceId.charAt(i);
+					if (ch > '9' || ch < '0') {
+						ch = (char) ('0' + (((int) ch) % 10));
+					}
+					sb.append(ch);
 				}
-				sb.append(ch);
 			}
-
 			sDeviceId = sb.toString();
 		}
-
 		return sDeviceId;
 	}
 
@@ -58,16 +65,21 @@ public class DeviceUtil {
 	 * IMSI
 	 * @return
 	 */
+	@SuppressLint({"MissingPermission", "HardwareIds"})
 	public static String getIMSI() {
 		String value = "";
-		TelephonyManager tm = (TelephonyManager) sContext.getSystemService(Context.TELEPHONY_SERVICE);
-		if (tm != null) {
-			value = tm.getSubscriberId();
+		try {
+			TelephonyManager tm = (TelephonyManager) sContext.getSystemService(Context.TELEPHONY_SERVICE);
+			if (tm != null) {
+				value = tm.getSubscriberId();
+			}
+			if (value == null) {
+				value = "";
+			}
+		} catch (Exception e) {
+			Timber.e(e);
 		}
 
-		if (value == null) {
-			value = "";
-		}
 
 		return value;
 	}

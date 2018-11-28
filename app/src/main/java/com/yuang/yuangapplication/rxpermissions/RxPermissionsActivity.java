@@ -2,7 +2,6 @@ package com.yuang.yuangapplication.rxpermissions;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,8 +13,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class RxPermissionsActivity extends BaseActivity {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.get_Permissions)
     Button getPermissions;
     @BindView(R.id.permissions_name)
@@ -28,7 +25,9 @@ public class RxPermissionsActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setToolBar(toolbar, "获取权限", true);
+        initToolbar("获取权限")
+                .setBackground(R.drawable.bg_toolbar)
+                .setLeftImage(R.mipmap.ic_back);
     }
 
     @Override

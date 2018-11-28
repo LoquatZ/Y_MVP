@@ -7,12 +7,21 @@
     android:orientation="vertical"
     tools:context="com.yuang.yuangapplication.banner.BannerActivity">
 
-    <include layout="@layout/layout_toolbar" />
+    <include layout="@layout/include_toolbar" />
 
-    <com.youth.banner.Banner
+    <com.yuang.banner.MZBannerView
+        android:id="@+id/bannerNew"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:image_scale_type="fit_xy"
+        android:padding="10dp"
+        app:tabMode="fixed" />
+
+    <com.yuang.banner.Banner
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        app:tabMode="fixed"
+        android:layout_height="180dp"
         app:image_scale_type="fit_xy"
-        android:layout_height="180dp"/>
+        app:tabMode="fixed"
+        android:layout_marginTop="40dp"/>
 </LinearLayout>

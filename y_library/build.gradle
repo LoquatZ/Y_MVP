@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -61,7 +61,7 @@ dependencies {
     // RxPermissions
     api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     // banner
-    api 'com.youth.banner:banner:1.4.10'
+    //    api 'com.youth.banner:banner:1.4.10'
     //WebView
     api 'com.just.agentweb:agentweb:4.0.2'
     //Message Code Edit
@@ -78,5 +78,6 @@ dependencies {
     api 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     //Log
     api 'com.jakewharton.timber:timber:4.7.1'
+    api project(':banner')
 }
 apply from: '../bintray.gradle'

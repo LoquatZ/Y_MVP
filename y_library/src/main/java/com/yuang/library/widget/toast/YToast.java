@@ -79,7 +79,7 @@ public class YToast extends Toast {
     private static View getToastView(Context context, CharSequence msg, YToastStyle style) {
         LayoutInflater inflate = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflate.inflate(R.layout.custom_toast, null);
+        View v = inflate.inflate(R.layout.item_custom_toast, null);
         ImageView toastIcom = v.findViewById(R.id.toast_icon);
         switch (style) {
             case SUCCESS:

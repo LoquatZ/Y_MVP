@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -53,7 +52,9 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         super.onCreate(savedInstanceState);
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar
-                .statusBarDarkFont(false, 0.2f)
+                .statusBarDarkFont(false, 0.2f)//状态栏字体是深色，不写默认为亮色
+                .navigationBarColor(R.color.white)//导航栏颜色
+                .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
                 .init();   //所有子类都将继承这些相同的属性
         parseIntentData(getIntent(), false);//得到传递信息
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -157,27 +158,15 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         return new DefaultHorizontalAnimator();
     }
 
-    protected void setToolBar(Toolbar toolbar, String title, boolean navigation) {
-        toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
-        if (navigation && getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            toolbar.setNavigationIcon(R.mipmap.ic_back);
-            toolbar.setNavigationOnClickListener(view -> onBackPressedSupport());
-        }
-    }
-
     /**
      * 左侧有返回键的标题栏
      * <p>如果在此基础上还要加其他内容,比如右侧有文字按钮,可以获取该方法返回值继续设置其他内容
      *
      * @param title 标题
      */
-    protected TitleBuilder initBackTitle(String title) {
+    protected TitleBuilder initToolbar(String title) {
         return new TitleBuilder(this)
                 .setTitleText(title)
-                .setLeftImage(R.mipmap.ic_back)
                 .setLeftOnClickListener(v -> onBackPressedSupport());
     }
 

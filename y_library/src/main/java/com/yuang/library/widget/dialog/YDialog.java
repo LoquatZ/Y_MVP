@@ -11,7 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.yuang.library.R;
-import com.yuang.library.widget.popwindow.PopSimpleAnimationListener;
+import com.yuang.library.widget.pop_window.PopSimpleAnimationListener;
 
 /**
  * Created by Yuang on 17/12/8.

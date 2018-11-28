@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.yuang.yuangapplication.dialog.DialogActivity">
 
-    <include layout="@layout/include_title_bar" />
+    <include layout="@layout/include_toolbar" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

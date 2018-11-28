@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,8 +17,6 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity<MainPresenter, MainModel> implements MainContract.View {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private BaseQuickAdapter<ActivityBean, BaseViewHolder> mAdapter;
@@ -31,7 +28,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setToolBar(toolbar, "Y_Library", false);
+        initToolbar("Y_Library")
+                .setBackground(R.drawable.bg_toolbar);
+
         initRecyclerView();
     }
 

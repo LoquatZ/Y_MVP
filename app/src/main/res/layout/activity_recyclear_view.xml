@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.yuang.yuangapplication.recyclerview.RecyclerViewActivity">
 
-    <include layout="@layout/layout_toolbar" />
+    <include layout="@layout/include_toolbar" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"

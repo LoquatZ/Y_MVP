@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
-        <com.yuang.library.widget.popwindow.view.PopUpView
+        <com.yuang.library.widget.pop_window.view.PopUpView
             android:id="@+id/popUpView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

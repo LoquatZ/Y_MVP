@@ -51,14 +51,14 @@
     </style>
 
     <style name="PopDownWindow">
-        <item name="android:windowEnterAnimation">@anim/fade_in</item>
-        <item name="android:windowExitAnimation">@anim/fade_out</item>
+        <item name="android:windowEnterAnimation">@anim/pop_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_fade_out</item>
     </style>
 
     <!--Toast-->
     <style name="toast_style">
-        <item name="android:windowEnterAnimation">@anim/top_in</item>
-        <item name="android:windowExitAnimation">@anim/top_out</item>
+        <item name="android:windowEnterAnimation">@anim/toast_top_in</item>
+        <item name="android:windowExitAnimation">@anim/toast_top_out</item>
     </style>
 
     <!--Dialog-->

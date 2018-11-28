@@ -37,8 +37,6 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
     private BaseQuickAdapter<GankItemBean, BaseViewHolder> mAdapter;
@@ -50,7 +48,10 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setToolBar(toolbar, "RecyclerViewActivity", true);
+        initToolbar("RecyclerViewActivity")
+                .setBackground(R.drawable.bg_toolbar)
+                .setLeftImage(R.mipmap.ic_back);
+
         refreshLayout.setRefreshing(true);
         mAdapter = new BaseQuickAdapter<GankItemBean, BaseViewHolder>(R.layout.item_tv_other) {
             @Override

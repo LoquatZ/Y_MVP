@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.umeng.analytics.MobclickAgent;
-import com.yuang.library.R;
 import com.yuang.library.utils.Constants;
 import com.yuang.library.utils.Logg;
 import com.yuang.library.utils.TUtil;
@@ -135,11 +134,7 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
      */
     protected TitleBuilder initTitleBar(String title) {
         return new TitleBuilder(mActivity)
-                .setTitleText(title)
-                .setLeftImage(R.mipmap.ic_back)
-                .setLeftOnClickListener(v -> {
-                    _mActivity.onBackPressed();
-                });
+                .setTitleText(title);
     }
 
     /**

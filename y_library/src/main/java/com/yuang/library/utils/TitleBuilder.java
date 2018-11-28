@@ -1,5 +1,6 @@
 package com.yuang.library.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
@@ -11,9 +12,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.yuang.library.R;
 
 import java.lang.reflect.Field;
+import java.util.concurrent.TimeUnit;
+
+import rx.functions.Action1;
+import timber.log.Timber;
 
 
 /**
@@ -77,7 +83,7 @@ public class TitleBuilder {
         tvLeft = (TextView) rootView.findViewById(R.id.titlebar_tv_left);
         tvRight = (TextView) rootView.findViewById(R.id.titlebar_tv_right);
         status_bar = rootView.findViewById(R.id.status_bar);
-        //是否沉浸
+        //是否可沉浸状态栏 如果 沉浸那么重新计算高度
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setViewFullScreen(status_bar,getStatusBarHeight(context));
         }
@@ -98,12 +104,6 @@ public class TitleBuilder {
         tvRight = (TextView) rootView.findViewById(R.id.titlebar_tv_right);
         status_bar = rootView.findViewById(R.id.status_bar);
         setViewFullScreen(status_bar,getStatusBarHeight(context));
-    }
-
-    // title
-    public TitleBuilder setTitleBgRes(int resid) {
-        rootView.setBackgroundResource(resid);
-        return this;
     }
 
     public TitleBuilder setTitleText(String text) {
@@ -131,12 +131,10 @@ public class TitleBuilder {
         return this;
     }
 
-    public TitleBuilder setLeftOnClickListener(OnClickListener listener) {
-        if (ivLeft.getVisibility() == View.VISIBLE) {
-            ivLeft.setOnClickListener(listener);
-        } else if (tvLeft.getVisibility() == View.VISIBLE) {
-            tvLeft.setOnClickListener(listener);
-        }
+    public TitleBuilder setLeftOnClickListener(Action1<Void> action1) {
+        RxView.clicks(ivLeft)
+                .throttleFirst(Constants.VIEW_THROTTLE_TIME, TimeUnit.MILLISECONDS)
+                .subscribe(action1);
         return this;
     }
 
@@ -178,6 +176,7 @@ public class TitleBuilder {
         return rootView;
     }
 
+    @SuppressLint("PrivateApi")
     private int getStatusBarHeight(Context context) {
         Class<?> c = null;
 
@@ -188,21 +187,14 @@ public class TitleBuilder {
         int x = 0, sbar = 0;
 
         try {
-
             c = Class.forName("com.android.internal.R$dimen");
-
             obj = c.newInstance();
-
             field = c.getField("status_bar_height");
-
             x = Integer.parseInt(field.get(obj).toString());
-
             sbar = context.getResources().getDimensionPixelSize(x);
-
         } catch (Exception e1) {
-
-            e1.printStackTrace();
-
+            Timber.e(e1);
+            return 0;
         }
 
         return sbar;

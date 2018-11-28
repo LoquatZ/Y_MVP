@@ -3,15 +3,14 @@ package com.yuang.yuangapplication.popwindow;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yuang.library.base.BaseActivity;
-import com.yuang.library.widget.popwindow.PopItemAction;
-import com.yuang.library.widget.popwindow.PopWindow;
+import com.yuang.library.widget.pop_window.PopItemAction;
+import com.yuang.library.widget.pop_window.PopWindow;
 import com.yuang.yuangapplication.R;
 
 import java.util.ArrayList;
@@ -21,10 +20,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class PopWindowActivity extends BaseActivity {
-
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.pop)
     Button pop;
     @BindView(R.id.bottom_pop)
@@ -40,7 +35,9 @@ public class PopWindowActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setToolBar(toolbar, "PopWindow", true);
+        initToolbar("PopWindow")
+                .setBackground(R.drawable.bg_toolbar)
+                .setLeftImage(R.mipmap.ic_back);
     }
 
     @Override

@@ -31,8 +31,6 @@ import static com.yuang.library.widget.dialog.YDialogChooseImage.LayoutType.TITL
 
 public class DialogActivity extends BaseActivity {
 
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
     @BindView(R.id.choose_photo)
     CardView choosePhoto;
     @BindView(R.id.choose_image)
@@ -45,7 +43,9 @@ public class DialogActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        initBackTitle("Dialog").setBackground(R.drawable.bg_toolbar);
+        initToolbar("Dialog")
+                .setBackground(R.drawable.bg_toolbar)
+                .setLeftImage(R.mipmap.ic_back);
     }
 
     @Override
