@@ -69,7 +69,7 @@ public class RxService {
         return createApi(clazz, BaseApp.getInstance().setBaseUrl());
     }
 
-    private static <T> T createApi(Class<T> clazz, String url) {
+    public static <T> T createApi(Class<T> clazz, String url) {
         return new Retrofit.Builder()
                 .baseUrl(url)
                 .client(okHttpClient)
