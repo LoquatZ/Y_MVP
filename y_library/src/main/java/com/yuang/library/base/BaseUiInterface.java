@@ -1,7 +1,5 @@
 package com.yuang.library.base;
 
-import android.app.Dialog;
-
 /**
  * Created by Yuang on 17/12/8.
  * Summary:UI接口
@@ -35,7 +33,7 @@ public interface BaseUiInterface {
     /**
      * 显示进度条对话框。
      */
-    Dialog showLoadingDialog(String msg);
+    void showLoadingDialog(String msg);
 
     /**
      * 关闭进度条对话框。

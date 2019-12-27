@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -135,6 +134,12 @@ public class TitleBuilder {
         RxView.clicks(ivLeft)
                 .throttleFirst(Constants.VIEW_THROTTLE_TIME, TimeUnit.MILLISECONDS)
                 .subscribe(action1);
+        if (tvLeft.getVisibility() == View.VISIBLE) {
+            RxView.clicks(tvLeft)
+                    .throttleFirst(Constants.VIEW_THROTTLE_TIME, TimeUnit.MILLISECONDS)
+                    .subscribe(action1);
+        }
+
         return this;
     }
 
@@ -163,11 +168,11 @@ public class TitleBuilder {
     }
 
 
-    public TitleBuilder setRightOnClickListener(OnClickListener listener) {
-        if (ivRight.getVisibility() == View.VISIBLE) {
-            ivRight.setOnClickListener(listener);
-        } else if (tvRight.getVisibility() == View.VISIBLE) {
-            tvRight.setOnClickListener(listener);
+    public TitleBuilder setRightOnClickListener(Action1<Void> action1) {
+        if (tvRight.getVisibility() == View.VISIBLE) {
+            RxView.clicks(tvRight)
+                    .throttleFirst(Constants.VIEW_THROTTLE_TIME, TimeUnit.MILLISECONDS)
+                    .subscribe(action1);
         }
         return this;
     }

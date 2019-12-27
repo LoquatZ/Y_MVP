@@ -31,8 +31,7 @@
                 android:padding="13dp"
                 tools:src="@mipmap/ic_back"
                 android:visibility="gone"
-                android:background="?attr/actionBarItemBackground"
-                tools:visibility="visible"/>
+                android:background="?attr/actionBarItemBackground"/>
 
             <TextView
                 android:id="@+id/titlebar_tv_left"
@@ -42,7 +41,10 @@
                 android:paddingLeft="@dimen/margin_medium"
                 android:paddingRight="@dimen/margin_medium"
                 android:textColor="@android:color/white"
-                android:visibility="gone"/>
+                android:background="?attr/actionBarItemBackground"
+                android:textSize="14dp"
+                android:visibility="gone"
+                android:text="新手必看"/>
 
             <TextView
                 android:id="@+id/titlebar_tv"
@@ -73,8 +75,8 @@
                 android:paddingLeft="@dimen/margin_medium"
                 android:paddingRight="@dimen/margin_medium"
                 android:textColor="@android:color/white"
-                android:visibility="gone"
-                android:textSize="17dp"/>
+                android:background="?attr/actionBarItemBackground"
+                android:textSize="14dp"/>
         </RelativeLayout>
 
 

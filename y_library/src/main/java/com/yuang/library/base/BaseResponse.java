@@ -25,6 +25,19 @@ public class BaseResponse<DataType> {
      */
     private DataType data;
 
+    /**
+     * 缓存Key
+     */
+    private String catch_key;
+
+    public String getCatch_key() {
+        return catch_key;
+    }
+
+    public void setCatch_key(String catch_key) {
+        this.catch_key = catch_key;
+    }
+
     public int getStatus() {
         return status;
     }

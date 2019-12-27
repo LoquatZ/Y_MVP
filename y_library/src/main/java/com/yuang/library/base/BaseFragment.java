@@ -1,7 +1,6 @@
 package com.yuang.library.base;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -132,11 +131,11 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
      *
      * @param title 标题
      */
-    protected TitleBuilder initTitleBar(String title) {
+    protected TitleBuilder initToolbar(String title) {
         return new TitleBuilder(mActivity)
-                .setTitleText(title);
+                .setTitleText(title)
+                .setLeftOnClickListener(v -> onBackPressedSupport());
     }
-
     /**
      * 使用默认的throttle设置来注册点击事件。
      * @param view 要注册的View
@@ -216,11 +215,10 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
     }
 
     @Override
-    public Dialog showLoadingDialog(String msg) {
+    public void showLoadingDialog(String msg) {
         if (getActivity() != null) {
             ((BaseActivity) getActivity()).showLoadingDialog(msg);
         }
-        return null;
     }
 
     @Override

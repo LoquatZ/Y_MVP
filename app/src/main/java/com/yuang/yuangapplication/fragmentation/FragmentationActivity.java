@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import com.yuang.library.base.BaseActivity;
+import com.yuang.library.utils.Logg;
+import com.yuang.library.utils.rx_utils.RxDataUtils;
 import com.yuang.library.widget.bottom_bar.BottomBar;
 import com.yuang.library.widget.bottom_bar.BottomBarTab;
 import com.yuang.yuangapplication.R;
@@ -83,6 +85,7 @@ public class FragmentationActivity extends BaseActivity {
                 //Fragment重复点击
             }
         });
+        Logg.e(RxDataUtils.isUrlNO("http://tool.chinaz.com/regex/")+"");
     }
 
     @Override

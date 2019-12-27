@@ -53,10 +53,10 @@ public class RxService {
             })
             //设置Cache
             .addNetworkInterceptor(new CacheInterceptor())//缓存方面需要加入这个拦截器
-            .cache(HttpCache.getCache())
             //添加HTTPLog
             .addInterceptor(new YHttpLoggingInterceptor(new DefaultFormatPrinter())
-                    .setLevel(BuildConfig.DEBUG ? YHttpLoggingInterceptor.Level.ALL : YHttpLoggingInterceptor.Level.NONE))
+                    .setLevel(BuildConfig.LOGG_OPEN ? YHttpLoggingInterceptor.Level.ALL : YHttpLoggingInterceptor.Level.NONE))
+            .cache(HttpCache.getCache())
             //time out
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)

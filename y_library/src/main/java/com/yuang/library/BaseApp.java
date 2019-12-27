@@ -3,6 +3,7 @@ package com.yuang.library;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.multidex.MultiDex;
 
 import com.bumptech.glide.Glide;
 import com.yuang.library.utils.DeviceUtil;
@@ -21,6 +22,12 @@ public abstract class BaseApp extends Application {
         if (BuildConfig.LOGG_OPEN) {//Timber初始化
             Timber.plant(new Timber.DebugTree());
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     public static synchronized BaseApp getInstance() {

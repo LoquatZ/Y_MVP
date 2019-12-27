@@ -1,1 +1,1 @@
-include ':app', ':y_library','banner'
+include ':app', ':floatmenu', 'banner', ':y_library'

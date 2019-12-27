@@ -1,7 +1,6 @@
 package com.yuang.library.base;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -54,7 +53,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         mImmersionBar
                 .statusBarDarkFont(false, 0.2f)//状态栏字体是深色，不写默认为亮色
                 .navigationBarColor(R.color.white)//导航栏颜色
-                .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
+//                .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
                 .init();   //所有子类都将继承这些相同的属性
         parseIntentData(getIntent(), false);//得到传递信息
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -263,7 +262,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     }
 
     @Override
-    public Dialog showLoadingDialog(String msg) {
+    public void showLoadingDialog(String msg) {
         if (loadingDialog != null && loadingDialog.isShowing()) {
             loadingDialog.dismiss();
         }
@@ -272,7 +271,6 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
                 .setCancelable(true);
         loadingDialog = builder.create();
         loadingDialog.show();
-        return loadingDialog;
     }
 
     @Override

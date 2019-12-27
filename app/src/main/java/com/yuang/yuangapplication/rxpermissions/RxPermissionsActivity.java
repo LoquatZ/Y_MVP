@@ -1,11 +1,12 @@
 package com.yuang.yuangapplication.rxpermissions;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yuang.library.base.BaseActivity;
 import com.yuang.yuangapplication.R;
 
@@ -35,6 +36,7 @@ public class RxPermissionsActivity extends BaseActivity {
 
     }
 
+    @SuppressLint("CheckResult")
     @OnClick(R.id.get_Permissions)
     public void onViewClicked() {
         StringBuffer stringBuffer = new StringBuffer();

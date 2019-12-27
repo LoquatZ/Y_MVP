@@ -123,7 +123,7 @@ public class RecyclerViewActivity extends BaseActivity<RecyclerViewPresenter, Re
 
     @Override
     public void showContent(List<GankItemBean> info, int page, int size) {
-        AdapterUtils.setData(info, mAdapter, page, size);
+        AdapterUtils.setData(info, mAdapter, page, size, null);
         refreshLayout.setRefreshing(false);
     }
 }

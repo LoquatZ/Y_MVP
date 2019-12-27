@@ -1,5 +1,7 @@
 package com.yuang.library.utils;
 
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yuang.library.R;
 
@@ -21,13 +23,18 @@ public class AdapterUtils {
      * @param page    页数
      * @param size    个数
      */
-    public static <T> void setData(List<T> list, BaseQuickAdapter adapter, int page, int size) {
+    public static <T> void setData(List<T> list, BaseQuickAdapter adapter, int page, int size, View emptyView) {
         Preconditions.checkNotNull(adapter);
         if (list == null || list.size() == 0) {
             if (page != 1) {
                 adapter.loadMoreEnd();
             } else {
-                setEmptyView(adapter);
+                adapter.setNewData(null);
+                if (emptyView != null) {
+                    adapter.setEmptyView(emptyView);
+                } else {
+                    setEmptyView(adapter);
+                }
             }
         } else {
             if (page == 1) {
